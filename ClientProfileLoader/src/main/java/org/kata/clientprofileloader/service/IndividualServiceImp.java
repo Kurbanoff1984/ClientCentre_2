@@ -1,5 +1,6 @@
 package org.kata.clientprofileloader.service;
 
+import lombok.RequiredArgsConstructor;
 import org.kata.clientprofileloader.entity.Individual;
 import org.kata.clientprofileloader.repository.IndividualRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,24 +12,27 @@ import java.util.Optional;
 import static java.util.Optional.empty;
 
 @Service
+@RequiredArgsConstructor
 public class IndividualServiceImp implements IndividualService{
 
 
     private final IndividualRepository individualRepository;
 
-    @Autowired
-    public IndividualServiceImp(IndividualRepository individualRepository) {
-        this.individualRepository = individualRepository;
-    }
-
     @Override
     public Individual findIndividual(String id, String type) {
-        return type.equals("uuid") == true ? individualRepository.findById(id).orElseThrow() :
-                type.equals("icp") == true ? individualRepository.findByIcp(id).orElseThrow() : Optional.of(new Individual()).orElseThrow();
+        return switch (type) {
+            case "uuid" -> individualRepository.findById(id).orElseThrow();
+            case "icp" -> individualRepository.findByIcp(id).orElseThrow();
+            default -> throw new RuntimeException("Параметр type указан некорректно!");
+        };
     }
 
     @Override
     public Individual saveIndividual(Individual individual) {
-        return individualRepository.save(individual);
+        try {
+            return individualRepository.save(individual);
+        } catch (Exception e) {
+            throw new RuntimeException("Возникла ошибка при записи!");
+        }
     }
 }
