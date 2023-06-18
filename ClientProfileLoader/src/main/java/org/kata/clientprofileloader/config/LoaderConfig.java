@@ -13,12 +13,12 @@ import java.util.Properties;
 
 @Configuration
 @AllArgsConstructor
-public class ServiceConfig {
+public class LoaderConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres?currentSchema=project");
+        dataSource.setUrl("jdbc:postgresql://localhost:5434/profile_loader_db");
         dataSource.setUsername("postgres");
         dataSource.setPassword("123");
         return dataSource;
@@ -44,7 +44,7 @@ public class ServiceConfig {
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.default_schema", "project");
+//        properties.setProperty("hibernate.default_schema", "project");
         return properties;
     }
 

@@ -32,11 +32,11 @@
         </dependency>
 
         <!--     add dependency Sokolov  -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.0.6-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--            <version>3.0.6</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
