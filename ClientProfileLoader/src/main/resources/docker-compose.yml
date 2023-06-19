@@ -1,6 +1,7 @@
 version: '3.7'
 services:
-  ClientProfileLoader:
+  some-postgres:
+    container_name: client_centre_2
     image: postgres
     restart: always
     ports:
@@ -9,13 +10,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: profile_loader_db
-      PGDATA: var/lib/postgresql/data
-
-    volumes:
-
-      - db:/var/lib/postgresql/data
-      - ./DUMP/project:/docker-entrypoint-initdb.d
-
 volumes:
   db:
     driver: local
