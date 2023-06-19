@@ -40,7 +40,6 @@ public class INNDoc {
     private String issuedBy;
     private String division;
     private String birthplace;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private Documents documents;

@@ -1,26 +1,30 @@
 package com.kata.clientprofileavatar.entity;
 
-import com.google.common.base.Charsets;
-import com.google.common.hash.Hashing;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
-import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 @Data
+@Entity
+@Table(name = "Avatar")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Avatar {
-    private final String uuid;
-    private final String name;
-    private final String md5;
-    private final int fileSize;
-    private final byte[] byteInterpretation;
-
-    public Avatar(String name, Integer fileSize, byte[] byteInterpretation) {
-        this.uuid = UUID.randomUUID().toString();
-        this.name = name;
-        this.md5 = String.valueOf(Hashing.md5().hashString(name, Charsets.UTF_8));
-        this.fileSize = fileSize;
-        this.byteInterpretation = byteInterpretation;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = "uuid")
+    private String  uuid;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "mp5")
+    private String md5;
+    @Column(name = "file_size")
+    private int fileSize;
+    @Lob
+    private byte[] byteSize;
 
 }

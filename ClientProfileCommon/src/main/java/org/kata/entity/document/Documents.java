@@ -1,5 +1,6 @@
 package org.kata.entity.document;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,6 @@ public class Documents {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "individual_id")
     private Individual individual;
-
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DeathCertDoc deathCertDocs;

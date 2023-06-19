@@ -22,6 +22,7 @@ import java.util.Date;
 @Entity
 public class Individual {
 
+
     @Id
     @UuidGenerator
     @Column(name = "id")
@@ -42,26 +43,20 @@ public class Individual {
     private String placeOfBirth;
     @Column(name = "country_of_birth")
     private String countryOfBirth;
-
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "documents_id")
     private Documents documents;
 
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "contacts_id")
     private ContactMedium contacts;
-
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id")
     private Avatar avatar;
-
     @OneToMany(mappedBy = "individual", fetch = FetchType.LAZY)
     private Collection<Address> address;
 
