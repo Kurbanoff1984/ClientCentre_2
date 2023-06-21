@@ -1,11 +1,10 @@
 package org.kata.entity.individual;
 
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 import org.kata.entity.contactmedium.ContactMedium;
 import org.kata.entity.document.Documents;
@@ -20,6 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name = "individual")
 @Entity
+@ToString
 public class Individual {
 
 
@@ -46,7 +46,7 @@ public class Individual {
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "documents_id")
     private Documents documents;
@@ -57,6 +57,7 @@ public class Individual {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id")
     private Avatar avatar;
+    @JsonManagedReference
     @OneToMany(mappedBy = "individual", fetch = FetchType.LAZY)
     private Collection<Address> address;
 

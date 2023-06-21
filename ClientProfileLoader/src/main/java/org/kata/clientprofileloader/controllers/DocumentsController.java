@@ -18,9 +18,9 @@ public class DocumentsController {
     private final DocumentsService documentsService;
 
 
-    @GetMapping("/{uuidInd}")
-    public ResponseEntity<DocumentsResponseDto> getDocuments(@PathVariable("uuidInd") String uuid) {
-        return new ResponseEntity<>(documentsService.getDocumentsByUuidIndividual(uuid), HttpStatus.OK);
+    @GetMapping("/{icp}")
+    public ResponseEntity<DocumentsResponseDto> getDocuments(@PathVariable("icp") String icp) {
+        return new ResponseEntity<>(documentsService.getDocumentsByUuidIndividual(icp), HttpStatus.OK);
     }
 
     @PostMapping("/")

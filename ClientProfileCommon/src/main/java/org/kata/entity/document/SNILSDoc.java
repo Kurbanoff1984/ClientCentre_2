@@ -1,5 +1,6 @@
 package org.kata.entity.document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,7 +36,7 @@ public class SNILSDoc {
     @Column(name = "issued_date")
     @Temporal(TemporalType.DATE)
     private Date issued;
-
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private Documents documents;

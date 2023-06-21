@@ -1,6 +1,8 @@
 package org.kata.entity.document;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +26,7 @@ public class Documents {
     @UuidGenerator
     @Column(name = "id")
     private String uuid;
-
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "individual_id")
     private Individual individual;
@@ -46,7 +48,7 @@ public class Documents {
 
     @OneToMany(mappedBy = "documents", fetch = FetchType.LAZY)
     private Collection<RFPassportDoc> rfPassportDocs;
-
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SNILSDoc snilsDoc;
 

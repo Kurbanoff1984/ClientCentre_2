@@ -1,50 +1,42 @@
 package org.kata.clientprofileservice.config;
 
-import lombok.AllArgsConstructor;
-import org.kata.config.ExceptionRestController;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.config.CustomEditorConfigurer;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.web.client.RestTemplate;
+
 
 import javax.sql.DataSource;
-import java.beans.PropertyEditor;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 @Configuration
-@AllArgsConstructor
-public class ServiceConfig {
-
-    @Bean
-    public ExceptionRestController exceptionRestController() {
-        return new ExceptionRestController();
-    }
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
+public class DatabaseConfig {
+    @Value("${datasource.url}")
+    private String URL;
+    @Value("${datasource.driver-class-name}")
+    private String driver;
+    @Value("${datasource.username}")
+    private String username;
+    @Value("${datasource.password}")
+    private String password;
+    @Value("${hibernate.ddl-auto}")
+    private String hbm2ddl;
+    @Value("${hibernate.show_sql}")
+    private String show_sql;
+    @Value("${datasource.scan}")
+    private String packageScan;
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/project?currentSchema=micro");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("root");
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(URL);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 
@@ -52,7 +44,7 @@ public class ServiceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("org.kata.entity");
+        em.setPackagesToScan(packageScan);
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(hibernateProperties());
         return em;
@@ -67,7 +59,8 @@ public class ServiceConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddl);
+        properties.setProperty("hibernate.show_sql", show_sql);
         return properties;
     }
 
