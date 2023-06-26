@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -17,15 +16,9 @@ import java.util.List;
 public class AvatarServiceImpl implements AvatarService {
     private AvatarDao avatarDao;
 
-    @Transactional
-    public void addAvatar(MultipartFile file) throws IOException {
-        avatarDao.addAvatar(file);
-    }
-
     @Override
     @Transactional
     public Avatar getAvatarById(Integer id) {
-
         return avatarDao.getAvatarById(id);
     }
 
@@ -36,7 +29,52 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     @Transactional
-    public Avatar getUserByAvatarUUID(String uuid) {
-        return avatarDao.getUserByAvatarUUID(uuid);
+    public Avatar getByAvatarUUID(String uuid) {
+        return avatarDao.getByAvatarUUID(uuid);
     }
+
+    @Override
+    @Transactional
+    public void deleteAvatarById(Integer id) {
+        avatarDao.deleteAvatarById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateAvatar(MultipartFile file, Integer id) {
+        avatarDao.updateAvatar(file,id);
+    }
+
+    //2
+
+    @Override
+    public List<Avatar> getListAvatarsByProfileIdentification(String profileIdentification) {
+        return avatarDao.getListAvatarsByProfileIdentification(profileIdentification);
+    }
+
+    @Override
+    public void addAvatarActive(MultipartFile file, String profileIdentification, boolean active) {
+        avatarDao.addAvatarActive(file,profileIdentification,active);
+    }
+
+    @Override
+    public void updateAvatarActive(MultipartFile file, Integer id, boolean active) {
+        avatarDao.updateAvatarActive(file, id, active);
+    }
+
+    @Override
+    public Avatar getAvatarByIdAndActive(String profileIdentification) {
+        return avatarDao.getAvatarByIdAndActive(profileIdentification);
+    }
+
+    @Override
+    public void deleteAvatarByProfileIdentification(String profileIdentification) {
+        avatarDao.deleteAvatarByProfileIdentification(profileIdentification);
+    }
+
+    @Override
+    public void updateActive(Integer id, boolean active) {
+        avatarDao.updateActive(id,active);
+    }
+
 }
