@@ -22,7 +22,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 @Tag(name = "Документы клиента", description = "Методы для работы с документами клиента")
-@RequestMapping("/api/client/{uuid}/documents")
+@RequestMapping("/api/client/documents")
 public class DocumentController {
     private final DocumentService documentService;
 
@@ -59,7 +59,8 @@ public class DocumentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно добавлен", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не добавлен")})
-    @PostMapping
+    @PostMapping("/postDoc")
+    //DocumentDto
     public ResponseEntity<Documents> addClientDocument(@PathVariable String uuid, @RequestBody Documents document) {
         log.info("Документ успешно добавлен для клиента с ID: {}", uuid);
         return new ResponseEntity<>(documentService.addClientDocument(uuid, document), HttpStatus.CREATED);
@@ -69,11 +70,11 @@ public class DocumentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно обновлен", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не обновлен")})
-    @PutMapping("/{uuid}")
-    public ResponseEntity<Documents> updateClientDocument(@PathVariable String uuid) {
-        log.info("Обновление документа с UUID: {} для клиента", uuid);
+    @PutMapping("/updateDocInfo/{icp}")
+    public ResponseEntity<Documents> updateClientDocument(@PathVariable String icp) {
+        log.info("Обновление документа с UUID: {} для клиента", icp);
         Documents document = new Documents();
-        log.info("Документ успешно обновлен с UUID: {} для клиента ", uuid);
+        log.info("Документ успешно обновлен с UUID: {} для клиента ", icp);
         return new ResponseEntity<>(documentService.updateClientDocument(document), HttpStatus.OK);
     }
 
@@ -81,7 +82,8 @@ public class DocumentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно удален", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не удален")})
-    @DeleteMapping("/{uuid}")
+    @DeleteMapping("/deleteDoc/{uuid}")
+    //@RequsestParam String icp
     public ResponseEntity<Void> deleteClientDocument(@PathVariable String uuid) {
         log.info("Удаление документа с UUID: {} для клиента ", uuid);
         boolean deleted = documentService.deleteClientDocument(uuid);
