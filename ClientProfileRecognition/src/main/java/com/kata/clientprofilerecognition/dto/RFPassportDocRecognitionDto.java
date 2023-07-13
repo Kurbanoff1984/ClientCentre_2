@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class RFPassportDocRecognitionDto {
+    // внедрил поле icp для отправки
     @Id
     private String icp;
     private String surname;

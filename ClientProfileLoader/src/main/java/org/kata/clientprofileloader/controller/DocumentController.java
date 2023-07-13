@@ -42,7 +42,7 @@ public class DocumentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно получен", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не найден")})
-    @GetMapping("/{uuid}")
+    @GetMapping("getDoc/{uuid}")
     public ResponseEntity<Documents> getClientDocument(@PathVariable String uuid) {
         log.info("Получение документа с UUID: {}", uuid);
         Optional<Documents> document = documentService.getClientDocument(uuid);

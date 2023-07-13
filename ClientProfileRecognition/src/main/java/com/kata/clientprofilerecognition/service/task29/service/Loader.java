@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class Loader {
     private final RestTemplate restTemplate;
-    String updateUrl = "http://localhost:8081/updateDocInfo/{icp}";
+    String updateUrl = "http://localhost:8081/postDoc";
     public void addClientDocument (RFPassportDocRecognitionDto rfPassportDocRecognitionDto){
         HttpHeaders headers = new org.springframework.http.HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
