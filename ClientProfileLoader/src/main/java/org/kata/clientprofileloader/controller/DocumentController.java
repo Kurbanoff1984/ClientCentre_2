@@ -26,72 +26,71 @@ import java.util.Optional;
 public class DocumentController {
     private final DocumentService documentService;
 
-    @Operation(summary = "Получение списка документов клиента", description = "Получает список документов клиента по его UUID")
+    @Operation(summary = "Получение списка документов клиента", description = "Получает список документов клиента по его icp")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Список успешно получен", response = Address.class),
             @ApiResponse(code = 404, message = "Список не найден")})
-    @GetMapping
-    public ResponseEntity<List<Documents>> getClientDocuments(@PathVariable String uuid) {
-        log.info("Получение списка документов для клиента с UUID: {}", uuid);
-        List<Documents> documents = documentService.getClientDocuments(uuid);
-        log.info("Найдено {} документов для клиента с UUID: {}", documents.size(), uuid);
+    @GetMapping("getAllDocuments/{icp}")
+    public ResponseEntity<List<Documents>> getClientDocuments(@PathVariable String icp) {
+        log.info("Получение списка документов для клиента с icp: {}", icp);
+        List<Documents> documents = documentService.getClientDocuments(icp);
+        log.info("Найдено {} документов для клиента с icp: {}", documents.size(), icp);
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
 
-    @Operation(summary = "Получает документ клиента", description = "Получает  документ клиента по его UUID")
+    @Operation(summary = "Получает документ клиента", description = "Получает  документ клиента по его icp")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно получен", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не найден")})
-    @GetMapping("getDoc/{uuid}")
-    public ResponseEntity<Documents> getClientDocument(@PathVariable String uuid) {
-        log.info("Получение документа с UUID: {}", uuid);
-        Optional<Documents> document = documentService.getClientDocument(uuid);
+    @GetMapping("getDocument/{icp}")
+    public ResponseEntity<Documents> getClientDocument(@PathVariable String icp) {
+        log.info("Получение документа с icp: {}", icp);
+        Optional<Documents> document = documentService.getClientDocument(icp);
         if (document.isPresent()) {
-            log.info("Документ с UUID: {} ", uuid);
+            log.info("Документ с icp: {} ", icp);
             return new ResponseEntity<>(document.get(), HttpStatus.OK);
         } else {
-            log.info("Документ с UUID: {} не найден для клиента", uuid);
+            log.info("Документ с icp: {} не найден для клиента", icp);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @Operation(summary = "Добавить документ клиента", description = "Добавляет  документ клиента по его UUID")
+    @Operation(summary = "Добавить документ клиента", description = "Добавляет  документ клиента по его icp")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно добавлен", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не добавлен")})
-    @PostMapping("/postDoc")
+    @PostMapping("/postDocument/{icp}")
     //DocumentDto
-    public ResponseEntity<Documents> addClientDocument(@PathVariable String uuid, @RequestBody Documents document) {
-        log.info("Документ успешно добавлен для клиента с ID: {}", uuid);
-        return new ResponseEntity<>(documentService.addClientDocument(uuid, document), HttpStatus.CREATED);
+    public ResponseEntity<Documents> addClientDocument(@PathVariable String icp, @RequestBody Documents document) {
+        log.info("Документ успешно добавлен для клиента с icp: {}", icp);
+        return new ResponseEntity<>(documentService.addClientDocument(icp, document), HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Обновляет документ клиента", description = "Обновлеят  документ клиента по его UUID")
+    @Operation(summary = "Обновляет документ клиента", description = "Обновлеят  документ клиента по его icp")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно обновлен", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не обновлен")})
-    @PutMapping("/updateDocInfo/{icp}")
+    @PutMapping("/putDocument/{icp}")
     public ResponseEntity<Documents> updateClientDocument(@PathVariable String icp) {
-        log.info("Обновление документа с UUID: {} для клиента", icp);
+        log.info("Обновление документа с icp: {} для клиента", icp);
         Documents document = new Documents();
-        log.info("Документ успешно обновлен с UUID: {} для клиента ", icp);
+        log.info("Документ успешно обновлен с icp: {} для клиента ", icp);
         return new ResponseEntity<>(documentService.updateClientDocument(document), HttpStatus.OK);
     }
 
-    @Operation(summary = "Удаляет документ клиента", description = "Удаляет  документ клиента по его UUID")
+    @Operation(summary = "Удаляет документ клиента", description = "Удаляет  документ клиента по его icp")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Документ успешно удален", response = Address.class),
             @ApiResponse(code = 404, message = "Документ не удален")})
-    @DeleteMapping("/deleteDoc/{uuid}")
-    //@RequsestParam String icp
-    public ResponseEntity<Void> deleteClientDocument(@PathVariable String uuid) {
-        log.info("Удаление документа с UUID: {} для клиента ", uuid);
-        boolean deleted = documentService.deleteClientDocument(uuid);
+    @DeleteMapping("/deleteDocument/{icp}")
+    public ResponseEntity<Documents> deleteClientDocument(@PathVariable String icp) {
+        log.info("Удаление документа с icp: {} для клиента ", icp);
+        boolean deleted = documentService.deleteClientDocument(icp);
         if (deleted) {
-            log.info("Документ успешно удален с ID: {} для клиента ", uuid);
+            log.info("Документ успешно удален с ID: {} для клиента ", icp);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            log.info("Документ с ID: {} не найден для клиента ", uuid);
+            log.info("Документ с ID: {} не найден для клиента ", icp);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

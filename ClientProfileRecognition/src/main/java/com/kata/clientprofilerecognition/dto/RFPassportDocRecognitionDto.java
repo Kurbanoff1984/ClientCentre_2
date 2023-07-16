@@ -1,5 +1,6 @@
 package com.kata.clientprofilerecognition.dto;
 
+import com.kata.clientprofilerecognition.service.task29.ClientStatus;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -24,6 +25,6 @@ public class RFPassportDocRecognitionDto {
     private String issuedDate;
     private String division;
     //для написания логики получения статуса
-    private boolean clientStatus;
+    private ClientStatus clientStatus;
 
 }
