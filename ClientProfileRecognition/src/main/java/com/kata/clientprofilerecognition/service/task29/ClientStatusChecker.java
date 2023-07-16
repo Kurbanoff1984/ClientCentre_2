@@ -2,7 +2,6 @@ package com.kata.clientprofilerecognition.service.task29;
 
 import com.kata.clientprofilerecognition.dto.RFPassportDocRecognitionDto;
 import com.kata.clientprofilerecognition.service.task29.clientService.ClientService;
-import com.kata.clientprofilerecognition.service.task29.service.Loader;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
