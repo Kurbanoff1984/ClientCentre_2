@@ -27,7 +27,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
                 )
         )
 )
-
 public class ClientProfileAvatarApplication {
 
     public static void main(String[] args) {

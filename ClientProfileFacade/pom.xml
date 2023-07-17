@@ -127,8 +127,34 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
             <version>4.0.2</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sf.uadetector/uadetector-core -->
+        <dependency>
+            <groupId>net.sf.uadetector</groupId>
+            <artifactId>uadetector-core</artifactId>
+            <version>0.9.22</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.21</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

@@ -1,6 +1,8 @@
 package com.kata.clientprofilefacade.dao.impl;
 
 import com.kata.clientprofilefacade.dao.ProfileAvatarDao;
+import com.kata.clientprofilefacade.util.PrometheusCustomization;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.core.io.ByteArrayResource;
@@ -17,12 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileAvatarImpl implements ProfileAvatarDao {
 
     private final RestTemplate restTemplate;
+    private final PrometheusCustomization prometheusCustomization;
 
 
     @SneakyThrows
     @Override
-    public <T> ResponseEntity<T> performAvatarOperation(MultipartFile file, Integer id, String profileIdentification, String uuid, Boolean active, String endpoint, HttpMethod httpMethod, Class<T> responseType) {
+    public <T> ResponseEntity<T> performAvatarOperation(MultipartFile file, Integer id, String profileIdentification, String uuid, Boolean active, String endpoint, HttpMethod httpMethod, Class<T> responseType, HttpServletRequest request, String graphName) {
 
+            prometheusCustomization.add(request, graphName);
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
             body.add("file", file == null ? null : new ByteArrayResource(file.getBytes()) {
                 @Override

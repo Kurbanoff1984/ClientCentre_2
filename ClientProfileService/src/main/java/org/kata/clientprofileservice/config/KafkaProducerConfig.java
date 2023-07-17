@@ -11,7 +11,7 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.converter.ByteArrayJsonMessageConverter;
-
+import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 
 
 import java.util.HashMap;
@@ -27,20 +27,20 @@ public class KafkaProducerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         //TODO указать группу потребителей, если будут
         return props;
     }
 
     @Bean
-    public ProducerFactory<String, byte[]> producerTestData() {
+    public ProducerFactory<String, String> producerTestData() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String,byte[]> kafkaTemplateIndividual() {
-        KafkaTemplate<String, byte[]> template = new KafkaTemplate<>(producerTestData());
-        template.setMessageConverter(new ByteArrayJsonMessageConverter());
+    public KafkaTemplate<String,String> kafkaTemplateIndividual() {
+        KafkaTemplate<String, String> template = new KafkaTemplate<>(producerTestData());
+        template.setMessageConverter(new StringJsonMessageConverter());
         return template;
     }
 

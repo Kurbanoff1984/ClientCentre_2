@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestDataIndividualServiceImpl implements TestDataIndividualService {
 
-    private final KafkaTemplate<String, byte[]> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final AddressRepo addressRepo;
     private final IndividualRepo individualRepo;
     private final GenerateUtilFactory generateUtil;
@@ -61,6 +61,6 @@ public class TestDataIndividualServiceImpl implements TestDataIndividualService 
             individualList.add(individual);
             individualRepo.save(individual);
         }
-        kafkaTemplate.send(TOPIC, objectMapper.writeValueAsBytes(individualList));
+        kafkaTemplate.send(TOPIC, individualList.toString());
     }
 }

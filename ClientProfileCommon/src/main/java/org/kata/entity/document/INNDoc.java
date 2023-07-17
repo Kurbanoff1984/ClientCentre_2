@@ -1,16 +1,15 @@
 package org.kata.entity.document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "INN_doc")
@@ -40,6 +39,7 @@ public class INNDoc {
     private String issuedBy;
     private String division;
     private String birthplace;
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private Documents documents;
