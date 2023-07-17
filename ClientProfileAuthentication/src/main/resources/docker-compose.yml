@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  redis:
+    image: redis:6.0-rc1-alpine
+    networks:
+      - redis-net
+    ports:
+      - "6379:6379"
+    entrypoint: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    restart: always
+networks:
+  redis-net:
+
+volumes:
+  redis-data:
+
+
+

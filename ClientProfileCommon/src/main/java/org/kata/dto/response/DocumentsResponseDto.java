@@ -10,6 +10,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class DocumentsResponseDto {
 
     private String uuid;

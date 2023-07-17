@@ -1,13 +1,14 @@
 package org.kata.clientprofileservice.service;
 
 
+import org.kata.clientprofileservice.validation.fieldEntityValidation.validationDto.IndividualValidationDto;
 import org.kata.dto.response.IndividualResponseDto;
 import org.kata.entity.individual.Individual;
 
 
 public interface IndividualService {
 
-    void createClient(Individual individual);
+    void createClient(IndividualValidationDto dto);
 
     Individual getClientByIcp(String icp);
 

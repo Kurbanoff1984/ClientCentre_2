@@ -2,8 +2,8 @@ package com.kata.clientprofilefacade.util;
 
 import com.kata.clientprofilefacade.exception.phonenumberexception.InvalidPhoneNumberException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static com.kata.clientprofilefacade.constant.PhoneNumberRegExp.PHONE_NUMBER_FORMAT;
 
 /**
  * This class provides helper functions for Phone Number class
@@ -33,6 +33,6 @@ public class PhoneNumberUtils {
      * @param phoneNumber Your phone number
      */
     public static boolean isPhoneNumberValid(String phoneNumber) {
-        return phoneNumber.matches(PhoneNumberConstants.PHONE_NUMBER_FORMAT);
+        return phoneNumber.matches(PHONE_NUMBER_FORMAT);
     }
 }

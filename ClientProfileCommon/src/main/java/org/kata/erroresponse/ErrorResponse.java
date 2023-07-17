@@ -21,4 +21,10 @@ public class ErrorResponse {
     private HttpStatus httpStatus;
     private int code;
 
+    public ErrorResponse(String text, HttpStatus httpStatus, int code) {
+        this.text = text;
+        this.date = LocalDateTime.now();
+        this.httpStatus = httpStatus;
+        this.code = code;
+    }
 }

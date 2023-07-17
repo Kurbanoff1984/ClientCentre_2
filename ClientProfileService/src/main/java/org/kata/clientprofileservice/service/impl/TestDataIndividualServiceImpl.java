@@ -2,6 +2,7 @@ package org.kata.clientprofileservice.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.kata.clientprofileservice.repository.AddressRepo;
 import org.kata.clientprofileservice.repository.IndividualRepo;
@@ -20,7 +21,7 @@ import java.util.List;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TestDataIndividualServiceImpl implements TestDataIndividualService {
 
     private final KafkaTemplate<String, byte[]> kafkaTemplate;
@@ -60,10 +61,6 @@ public class TestDataIndividualServiceImpl implements TestDataIndividualService 
             individualList.add(individual);
             individualRepo.save(individual);
         }
-
-        byte[] serializeData = objectMapper.writeValueAsBytes(individualList);
-        kafkaTemplate.send(TOPIC, serializeData);
+        kafkaTemplate.send(TOPIC, objectMapper.writeValueAsBytes(individualList));
     }
-
-
 }

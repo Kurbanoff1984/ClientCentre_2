@@ -1,9 +1,6 @@
 package org.kata.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,11 +8,12 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class RFPassportDocResponseDto {
 
     private String uuid;
-    private String series;
-    private String number;
+    private String seriesRFP;
+    private String numberRFP;
     private Date issued;
     private String departmentDoc;
     private Date receiptDocDate;

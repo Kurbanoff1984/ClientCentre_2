@@ -13,6 +13,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.sql.DataSource;
 import java.util.*;
 
+/**
+ * Конфигурация для подключения к базе данных
+ */
 @Configuration
 public class DatabaseConfig {
     @Value("${datasource.url}")

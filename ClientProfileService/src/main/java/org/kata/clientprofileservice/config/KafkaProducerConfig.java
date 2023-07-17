@@ -44,6 +44,4 @@ public class KafkaProducerConfig {
         return template;
     }
 
-
-
 }

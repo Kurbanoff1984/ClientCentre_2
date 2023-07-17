@@ -1,6 +1,5 @@
 package org.kata.entity.document;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

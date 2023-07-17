@@ -5,8 +5,8 @@ import org.kata.clientprofileloader.repository.DocumentsRepo;
 import org.kata.clientprofileloader.repository.IndividualRepo;
 import org.kata.clientprofileloader.service.DocumentsService;
 import org.kata.dto.response.DocumentsResponseDto;
+import org.kata.dto.response.IndividualResponseDto;
 import org.kata.entity.document.Documents;
-import org.kata.entity.individual.Individual;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class DocumentsServiceImpl implements DocumentsService {
      * @param individual
      */
     @Override
-    public void createNewDocumentsForIndividual(Individual individual) {
+    public void createNewDocumentsForIndividual(IndividualResponseDto individual) {
         Documents documents = new Documents();
         documents.setIndividual(individual);
         individual.setDocuments(documents);

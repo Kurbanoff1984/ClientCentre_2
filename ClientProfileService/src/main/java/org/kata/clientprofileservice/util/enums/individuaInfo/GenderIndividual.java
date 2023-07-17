@@ -1,16 +1,9 @@
 package org.kata.clientprofileservice.util.enums.individuaInfo;
 
 public enum GenderIndividual {
-    Male,
-    Female,
-    NonBinary,
-    Unspecified,
-    Transgender,
-    Binary,
-    Bigender,
-    Agender,
-    Androgynous,
-    Polyflexible;
+    F,
+    M,
+    U;
 
     public String toStringGender() {
         return this.name();

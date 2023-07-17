@@ -23,10 +23,10 @@ public class RFPassportDoc {
     private String uuid;
 
     @Column(name = "series", nullable = false)
-    private String series;
+    private String seriesRFP;
 
     @Column(name = "number", nullable = false)
-    private String number;
+    private String numberRFP;
 
     @Column(name = "issued_date")
     @Temporal(value = TemporalType.DATE)

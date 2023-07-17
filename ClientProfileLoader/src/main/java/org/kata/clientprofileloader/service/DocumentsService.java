@@ -1,14 +1,14 @@
 package org.kata.clientprofileloader.service;
 
 import org.kata.dto.response.DocumentsResponseDto;
-import org.kata.entity.individual.Individual;
+import org.kata.dto.response.IndividualResponseDto;
 
 
 public interface DocumentsService {
 
     DocumentsResponseDto getDocumentsByUuidIndividual(String uuidInd);
 
-    void createNewDocumentsForIndividual(Individual individual);
+    void createNewDocumentsForIndividual(IndividualResponseDto individual);
 
 
 }

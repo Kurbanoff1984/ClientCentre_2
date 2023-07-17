@@ -64,7 +64,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar getAvatarByIdAndActive(String profileIdentification) {
-        return avatarDao.getAvatarByIdAndActive(profileIdentification);
+        return avatarDao.getAvatarByProfileIdentificationAndActive(profileIdentification);
     }
 
     @Override
@@ -76,5 +76,13 @@ public class AvatarServiceImpl implements AvatarService {
     public void updateActive(Integer id, boolean active) {
         avatarDao.updateActive(id,active);
     }
+    @Override
+    public List<Avatar> getDuplicateAvatars(MultipartFile file){
+       return avatarDao.getDuplicateAvatars(file);
+    }
 
+    @Override
+    public int сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification) {
+        return avatarDao.сheckPercentDuplicateAvatars(file,profileIdentification);
+    }
 }

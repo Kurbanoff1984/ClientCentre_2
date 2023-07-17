@@ -16,8 +16,8 @@ import java.util.Date;
 public class RFDrivingLicenseDocResponseDto {
 
     private String uuid;
-    private String series;
-    private String number;
+    private String seriesRDL;
+    private String numberRDL;
     private Date issued;
     private String departmentDoc;
     private Date receiptDocDate;

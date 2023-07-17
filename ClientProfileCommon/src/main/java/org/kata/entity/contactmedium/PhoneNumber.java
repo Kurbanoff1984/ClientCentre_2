@@ -25,6 +25,6 @@ public class PhoneNumber {
     private ContactMedium contactMedium;
 
     @Column(name = "phone")
-    private String value;
+    private String valuePhone;
 
 }

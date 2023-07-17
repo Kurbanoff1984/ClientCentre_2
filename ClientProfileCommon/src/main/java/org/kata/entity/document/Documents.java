@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
 import org.kata.entity.individual.Individual;
 
@@ -26,6 +28,7 @@ public class Documents {
     @Column(name = "id")
     private String uuid;
     @JsonBackReference
+    @OnDelete(action = OnDeleteAction.CASCADE) //******************************
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "individual_id")
     private Individual individual;
@@ -50,5 +53,6 @@ public class Documents {
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SNILSDoc snilsDoc;
+
 
 }

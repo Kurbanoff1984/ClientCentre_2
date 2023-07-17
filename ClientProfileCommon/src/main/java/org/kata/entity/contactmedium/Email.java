@@ -27,5 +27,5 @@ public class Email {
     private ContactMedium contactMedium;
 
     @Column(name = "email")
-    private String value;
+    private String valueEmail;
 }

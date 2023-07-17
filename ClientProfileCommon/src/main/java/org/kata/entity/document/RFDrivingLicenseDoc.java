@@ -22,9 +22,9 @@ public class RFDrivingLicenseDoc {
     @Column(name = "id")
     private String uuid;
     @Column(name = "series", nullable = false)
-    private String series;
+    private String seriesRDL;
     @Column(name = "number", nullable = false)
-    private String number;
+    private String numberRDL;
     @Column(name = "issued_date")
     @Temporal(value = TemporalType.DATE)
     private Date issued;

@@ -2,8 +2,10 @@ package org.kata.config;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.kata.erroresponse.ComplexValidationErrorsResponse;
 import org.kata.erroresponse.ErrorResponse;
 import org.kata.exception.NotFoundEntityException;
+import org.kata.exception.validationException.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -59,4 +61,19 @@ public class ExceptionRestController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+
+//-------------------------------------------------------------------------------------------------------------------
+
+    /**
+     *Комплексный результат валидации объекта
+     */
+    @ExceptionHandler(ComplexValidationException.class)
+    public ResponseEntity<ComplexValidationErrorsResponse> complexValidation(ComplexValidationException e) {
+        ComplexValidationErrorsResponse complexValidationErrorsResponse = new ComplexValidationErrorsResponse(
+                e.getErrors(),
+                LocalDateTime.now(),
+                e.getCode()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(complexValidationErrorsResponse);
+    }
 }

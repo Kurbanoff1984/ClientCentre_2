@@ -1,8 +1,10 @@
 package com.kata.clientprofilefacade.util;
 
-import com.kata.clientprofilefacade.dto.IndividualDTO;
+
 import com.kata.clientprofilefacade.exception.individualexception.InvalidFullNameException;
 import lombok.extern.slf4j.Slf4j;
+import org.kata.dto.response.IndividualResponseDto;
+
 
 /**
  This class provides helper functions for Individual class
@@ -16,7 +18,9 @@ public class IndividualUtils {
      * This method to check for null for first name, last name and full name
      * @param individual Your Individual object that includes the first name, last name and full name
      */
-    public static void fullNameConfirmation (IndividualDTO individual) {
+
+    public static void fullNameConfirmation (IndividualResponseDto individual) {
+
         if (individual.getFullName() == null || individual.getFullName().isEmpty()) {
             log.error("Full name is null or empty");
             throw new InvalidFullNameException("Full name cannot be null or empty");

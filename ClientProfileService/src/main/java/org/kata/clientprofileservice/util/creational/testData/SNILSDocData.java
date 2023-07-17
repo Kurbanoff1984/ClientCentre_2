@@ -5,31 +5,34 @@ import org.kata.clientprofileservice.util.testDto.TestDataSNILSDocDto;
 import org.kata.entity.document.SNILSDoc;
 import org.modelmapper.ModelMapper;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Random;
 
 public class SNILSDocData implements GeneratorSNILSDocTestData {
     @Override
     public SNILSDoc generateRandomSNILSDoc() {
         ModelMapper modelMapper = new ModelMapper();
-        Random random = new Random();
         TestDataSNILSDocDto snilsDoc = TestDataSNILSDocDto.builder()
-                .receiptDocDate(getRandomDate())
-                .validateDateDoc(getRandomDate())
-                .issued(getRandomDate())
-                .snils(String.valueOf(Math.abs(random.nextLong()) % 100000000000L))
+                .receiptDocDate(GeneratorRandomDate.getRandomDate())
+                .validateDateDoc(GeneratorRandomDate.getRandomDate())
+                .issued(GeneratorRandomDate.getRandomDate())
+                .snils(getRandomSnils())
                 .build();
         return modelMapper.map(snilsDoc, SNILSDoc.class);
     }
 
-    protected Date getRandomDate() {
-        Random random = new Random();
-        Calendar calendar = new GregorianCalendar();
-        calendar.set(Calendar.YEAR, random.nextInt(50) + 1965);
-        calendar.set(Calendar.MONTH, random.nextInt(12));
-        calendar.set(Calendar.DAY_OF_MONTH, random.nextInt(calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) + 1);
-        return calendar.getTime();
+    protected String getRandomSnils() {
+        Random random =  new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 15; i++) {
+            int randomD = random.nextInt(10);
+            if (i == 3 || i == 7) {
+                sb.append("-");
+            } else if (i == 11) {
+                sb.append(" ");
+            } else {
+                sb.append(randomD);
+            }
+        }
+        return sb.toString();
     }
 }

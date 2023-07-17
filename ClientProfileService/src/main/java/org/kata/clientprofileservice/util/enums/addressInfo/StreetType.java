@@ -1,17 +1,29 @@
 package org.kata.clientprofileservice.util.enums.addressInfo;
 
 public enum StreetType {
-    HighStreet,
-    MainStreet,
-    Avenue,
-    Boulevard,
-    Lane,
-    Road,
-    Square,
-    CulDeSac,
-    Promenade,
-    Alley;
-    public String toStringStreetType() {
-        return this.name();
+    V1("Высокая улица"),
+    V2("Главная улица"),
+    V3("Авеню"),
+    V4("Бульвар"),
+    V5("Переулок"),
+    V6("Дорога"),
+    V7("Площадь"),
+    V8("Тупик"),
+    V9("Променад"),
+    V10("Аллея");
+    private String value;
+    private StreetType(String value) {
+        this.value = value;
     }
+    public String getValue() {
+        return value;
+    }
+
 }
+
+
+
+
+
+
+

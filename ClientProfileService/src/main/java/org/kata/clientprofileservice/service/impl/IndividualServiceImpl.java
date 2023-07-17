@@ -5,7 +5,8 @@ import org.kata.clientprofileservice.repository.IndividualRepo;
 import org.kata.clientprofileservice.service.IndividualService;
 
 import org.kata.clientprofileservice.service.projection.IndividualUuidProjection;
-import org.kata.clientprofileservice.validation.IndividualValidation;
+import org.kata.clientprofileservice.validation.databaseValidation.IndividualValidation;
+import org.kata.clientprofileservice.validation.fieldEntityValidation.validationDto.IndividualValidationDto;
 import org.kata.dto.response.IndividualResponseDto;
 import org.kata.entity.individual.Individual;
 import org.modelmapper.ModelMapper;
@@ -29,8 +30,8 @@ public class IndividualServiceImpl implements IndividualService {
 
     @Override
     @Transactional
-    public void createClient(Individual individual) {
-        individualRepo.save(individual);
+    public void createClient(IndividualValidationDto dto) {
+        individualRepo.save(modelMapper.map(dto, Individual.class));
     }
 
     @Override
