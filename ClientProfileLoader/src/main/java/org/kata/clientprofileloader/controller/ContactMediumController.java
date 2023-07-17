@@ -21,7 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 @Tag(name = "Контакт клиента", description = "Методы для работы с контактом клиента")
-@RequestMapping("/api/client/{uuid}/contact")
+@RequestMapping("/api/client/contact")
 public class ContactMediumController {
     private final ContactMediumService contactMediumService;
 
@@ -29,15 +29,15 @@ public class ContactMediumController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Контакт успешно получен", response = Address.class),
             @ApiResponse(code = 404, message = "Контакт не найден")})
-    @GetMapping
-    public ResponseEntity<ContactMedium> getClientContact(@PathVariable String uuid) {
-        log.info("Получение контакта для клиента с UUID: {}", uuid);
-        Optional<ContactMedium> contact = contactMediumService.getClientContact(uuid);
+    @GetMapping("/getContact/{icp}")
+    public ResponseEntity<ContactMedium> getClientContact(@PathVariable String icp) {
+        log.info("Получение контакта для клиента с icp: {}", icp);
+        Optional<ContactMedium> contact = contactMediumService.getClientContact(icp);
         if (contact.isPresent()) {
-            log.info("Контакт найден для клиента с UUID: {}", uuid);
+            log.info("Контакт найден для клиента с icp: {}", icp);
             return new ResponseEntity<>(contact.get(), HttpStatus.OK);
         } else {
-            log.info("Контакт не найден для клиента с UUID: {}", uuid);
+            log.info("Контакт не найден для клиента с icp: {}", icp);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -46,37 +46,36 @@ public class ContactMediumController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Контакт успешно добавлен", response = Address.class),
             @ApiResponse(code = 404, message = "Контакт не добавлен")})
-    @PostMapping
-    public ResponseEntity<ContactMedium> addClientContact(@PathVariable String uuid, @RequestBody ContactMedium contact) {
-        log.info("Контакт успешно добавлен для клиента с ID: {}", uuid);
-        return new ResponseEntity<>(contactMediumService.addClientContact(uuid, contact), HttpStatus.CREATED);
+    @PostMapping("/postContact/{icp}")
+    public ResponseEntity<ContactMedium> addClientContact(@PathVariable String icp, @RequestBody ContactMedium contact) {
+        log.info("Контакт успешно добавлен для клиента с icp: {}", icp);
+        return new ResponseEntity<>(contactMediumService.addClientContact(icp, contact), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Обновление контакта клиента", description = "Обновление кнтакт клиента по его UUID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Контакт успешно обновлен", response = Address.class),
             @ApiResponse(code = 404, message = "Контакт не обновлен")})
-    @PutMapping
-    public ResponseEntity<ContactMedium> updateClientContact(@PathVariable String uuid, @RequestBody ContactMedium updatedContact) {
-        log.info("Обновление контакта для клиента с UUID: {}", uuid);
-        ContactMedium contact = new ContactMedium();
-        log.info("Контакт успешно обновлен для клиента с UUID: {}", uuid);
-        return new ResponseEntity<>(contactMediumService.updateClientContact(contact), HttpStatus.OK);
+    @PutMapping("/putContact/{icp}")
+    public ResponseEntity<ContactMedium> updateClientContact(@PathVariable String icp, @RequestBody ContactMedium updatedContact) {
+        log.info("Обновление контакта для клиента с icp: {}", icp);
+        log.info("Контакт успешно обновлен для клиента с icp: {}", icp);
+        return new ResponseEntity<>(contactMediumService.updateClientContact(updatedContact), HttpStatus.OK);
     }
 
     @Operation(summary = "Удаление контакта клиента", description = "Удаляет кнтакт клиента по его UUID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Контакт успешно удален", response = Address.class),
             @ApiResponse(code = 404, message = "Контакт не удален")})
-    @DeleteMapping
-    public ResponseEntity<Void> deleteClientContact(@PathVariable String uuid) {
-        log.info("Удаление контакта для клиента с UUID: {}", uuid);
-        boolean deleted = contactMediumService.deleteClientContact(uuid);
+    @DeleteMapping("/deleteContact/{icp}")
+    public ResponseEntity<Void> deleteClientContact(@PathVariable String icp) {
+        log.info("Удаление контакта для клиента с icp: {}", icp);
+        boolean deleted = contactMediumService.deleteClientContact(icp);
         if (deleted) {
-            log.info("Контакт успешно удален для клиента с UUID: {}", uuid);
+            log.info("Контакт успешно удален для клиента с icp: {}", icp);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            log.info("Контакт не найден для клиента с UUID: {}", uuid);
+            log.info("Контакт не найден для клиента с icp: {}", icp);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

@@ -1,5 +1,7 @@
 package com.kata.clientprofilerecognition.dto;
 
+import com.kata.clientprofilerecognition.service.task29.ClientStatus;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Getter
@@ -7,7 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class RFPassportRecognitionDto {
+public class RFPassportDocRecognitionDto {
+    // внедрил поле icp для отправки
+    @Id
+    private String icp;
     private String surname;
     private String name;
     private String patronymic;
@@ -19,5 +24,7 @@ public class RFPassportRecognitionDto {
     private String issuedBy;
     private String issuedDate;
     private String division;
+    //для написания логики получения статуса
+    private ClientStatus clientStatus;
 
 }
