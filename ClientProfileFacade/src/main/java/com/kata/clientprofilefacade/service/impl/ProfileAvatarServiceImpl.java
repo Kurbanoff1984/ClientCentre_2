@@ -2,6 +2,7 @@ package com.kata.clientprofilefacade.service.impl;
 
 import com.kata.clientprofilefacade.dao.ProfileAvatarDao;
 import com.kata.clientprofilefacade.service.ProfileAvatarService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class ProfileAvatarServiceImpl implements ProfileAvatarService {
     private final ProfileAvatarDao profileAvatarDao;
 
     @Override
-    public <T> ResponseEntity<T> performAvatarOperation(MultipartFile file, Integer id, String profileIdentification, String uuid, Boolean active, String endpoint, HttpMethod httpMethod, Class<T> responseType) {
-        return profileAvatarDao.performAvatarOperation(file,id,profileIdentification,uuid,active,endpoint,httpMethod,responseType);
+    public <T> ResponseEntity<T> performAvatarOperation(MultipartFile file, Integer id, String profileIdentification, String uuid, Boolean active, String endpoint, HttpMethod httpMethod, Class<T> responseType, HttpServletRequest request, String graphName) {
+        return profileAvatarDao.performAvatarOperation(file,id,profileIdentification,uuid,active,endpoint,httpMethod,responseType, request, graphName);
     }
 }

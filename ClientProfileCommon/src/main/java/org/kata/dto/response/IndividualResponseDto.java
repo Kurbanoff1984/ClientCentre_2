@@ -2,11 +2,10 @@ package org.kata.dto.response;
 
 
 import lombok.*;
-import org.kata.entity.contactmedium.ContactMedium;
-import org.kata.entity.individual.Address;
-import org.kata.entity.individual.Avatar;
+import org.kata.enums.IndividualStatus;
 
-import java.util.Collection;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -35,11 +34,8 @@ public class IndividualResponseDto {
 
     private Date birthDate;
 
-//    private DocumentsResponseDto documents;
+    private IndividualStatus status;
 
-//    private ContactMedium contacts;
+    private LocalDateTime dateStatus;
 
-//    private Avatar avatar;
-//
-//    private Collection<Address> address;
 }

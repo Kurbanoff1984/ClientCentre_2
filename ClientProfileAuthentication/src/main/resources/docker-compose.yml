@@ -6,15 +6,38 @@ services:
       - redis-net
     ports:
       - "6379:6379"
-    entrypoint: redis-server --appendonly yes
+    container_name: redis
+#    entrypoint: redis-server --appendonly yes
     volumes:
       - redis-data:/data
     restart: always
+#зайти в контейнер docker exec -it redis redis-cli
+  postgres:
+#    image: postgres:15.3-alpine3.18
+    image: postgres:15.0-alpine
+    networks:
+      - postgres-net
+    ports:
+      - "5432:5432"
+    container_name: postgresql
+    environment:
+      POSTGRES_USER: $${datasource.username}
+      POSTGRES_PASSWORD: $${datasource.password}
+      POSTGRES_DB: $${datasource.url}
+    volumes:
+      - postgres-data:/data
+    restart: always
+#зайти в контейнер docker exec -it postgresql psql -U root -d users
 networks:
   redis-net:
+  postgres-net:
 
 volumes:
   redis-data:
+  postgres-data:
+
+
+
 
 
 

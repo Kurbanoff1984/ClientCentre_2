@@ -1,8 +1,9 @@
 package com.kata.clientprofilefacade.dao;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.kata.dto.response.DocumentsResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface GetDocumentsDao {
-    <T> ResponseEntity<T> giveDocuments(String token, String uuid);
+    <T> ResponseEntity<T> giveDocuments(String token, String uuid, HttpServletRequest request, String graphName);
 }

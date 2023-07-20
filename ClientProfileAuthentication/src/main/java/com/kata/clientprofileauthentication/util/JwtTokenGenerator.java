@@ -1,33 +1,28 @@
-package com.kata.clientprofilefacade1.util;
+package com.kata.clientprofileauthentication.util;
 
-import com.kata.clientprofilefacade1.models.ProfileToken;
+import com.kata.clientprofileauthentication.models.tokens.ProfileToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.RandomStringUtils;
 import java.util.Date;
-import java.util.List;
+
+import static com.kata.clientprofileauthentication.util.PropertiesInitialization.ACCESS_SECRET_KEY;
+import static com.kata.clientprofileauthentication.util.PropertiesInitialization.ACCESS_TIME;
+import static com.kata.clientprofileauthentication.util.PropertiesInitialization.BEARER_LENGTH;
+import static com.kata.clientprofileauthentication.util.PropertiesInitialization.REFRESH_SECRET_KEY;
+import static com.kata.clientprofileauthentication.util.PropertiesInitialization.REFRESH_TIME;
+import static com.kata.clientprofileauthentication.util.PropertiesInitialization.ROLES;
 
 /**
  * сервис генерации новых токенов
  */
 @Component
+@Slf4j
 public class JwtTokenGenerator {
-    @Value("${access.secret.key}")
-    protected static String ACCESS_SECRET_KEY;
-    @Value("${refresh.secret.key}")
-    protected static String REFRESH_SECRET_KEY;
-    @Value("${secret.roles}")
-    protected static List<String> ROLES;
-    @Value("${access.time}")
-    protected static int ACCESS_TIME;
-    @Value("${refresh.time}")
-    protected static int REFRESH_TIME;
-    @Value("${bearer.length}")
-    protected static int BEARER_LENGTH;
     protected SecretKey secretKeyFabric(String key) {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
     }
@@ -37,7 +32,7 @@ public class JwtTokenGenerator {
         Date accessDate = new Date(now.getTime() + (long) ACCESS_TIME *60*1000);// 5 min expiration
         Date refreshDate = new Date(now.getTime() + (long) REFRESH_TIME *60*1000); // 1 day expiration
         String JwtBearerToken = "JwtBearer "+ Jwts.builder()
-                .claim("role", ROLES)
+                .claim("role", ROLES.get(1))
                 .setIssuedAt(now)
                 .setExpiration(accessDate)
                 .signWith(secretKeyFabric(ACCESS_SECRET_KEY))
@@ -47,10 +42,11 @@ public class JwtTokenGenerator {
                 .setExpiration(refreshDate)
                 .signWith(secretKeyFabric(REFRESH_SECRET_KEY))
                 .compact();
+        log.info("Модель токена "+ ROLES.get(1)+" сгенерирована");
         return ProfileToken.builder()
+                .bearerToken("Bearer "+ RandomStringUtils.randomAlphanumeric(BEARER_LENGTH))
                 .jwtBearerToken(JwtBearerToken)
                 .refreshToken(JwtRefreshToken)
-                .bearerToken("Bearer "+ RandomStringUtils.randomAlphanumeric(BEARER_LENGTH))
                 .build();
     }
     public String generateBearerOrJwtBearerToken(String token) {

@@ -2,10 +2,7 @@ package org.kata.entity.document;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
@@ -14,6 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity

@@ -2,6 +2,7 @@ package com.kata.clientprofilefacade.controller;
 
 import com.kata.clientprofilefacade.service.GetDocumentsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,10 @@ public class DocumentsController {
      * The method allows you to get the document depending on the token
      */
     @GetMapping("/documents/{uuidInd}")
-    public <T> ResponseEntity<T> getDocuments(@RequestHeader(value = "Authorization", required = false) String token, @PathVariable("uuidInd") String uuid) {
-        return getDocumentsService.giveDocuments(token, uuid);
+    public <T> ResponseEntity<T> getDocuments(@RequestHeader(value = "Authorization", required = false) String token,
+                                              @PathVariable("uuidInd") String uuid,
+                                              HttpServletRequest request) {
+        return getDocumentsService.giveDocuments(token, uuid, request, "Documents request");
     }
 
 

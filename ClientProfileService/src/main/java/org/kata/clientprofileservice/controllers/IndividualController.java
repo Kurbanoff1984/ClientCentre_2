@@ -22,21 +22,11 @@ public class IndividualController {
     private final IndividualServiceImpl individualService;
 
 
-    @GetMapping("/getClient")
-    public ResponseEntity<IndividualResponseDto> getClient(@RequestParam("id") String id,
-                                                           @RequestParam(value = "type", defaultValue = "ICP") String type) {
-        return new ResponseEntity<>(individualService.findIndividual(id, type), HttpStatus.OK);
-    }
-
-
-
-
     @RequestMapping("/createClient")
     @ValidParams
     public ResponseEntity<IndividualValidationDto> createTestValidationDto(@RequestBody IndividualValidationDto dto) {
         individualService.createClient(dto);
         return ResponseEntity.ok().body(dto);
     }
-
 
 }

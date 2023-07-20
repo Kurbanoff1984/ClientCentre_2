@@ -39,3 +39,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/ClientProfileService/src/main/resources/DUMP/project/

@@ -38,7 +38,7 @@ public class Documents {
 
     @OneToMany(mappedBy = "documents", fetch = FetchType.LAZY)
     private Collection<FrgnPassportDoc> frgnPassportDocs;
-
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private INNDoc innDoc;
 
@@ -53,6 +53,5 @@ public class Documents {
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SNILSDoc snilsDoc;
-
 
 }

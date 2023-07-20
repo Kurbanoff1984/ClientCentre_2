@@ -7,22 +7,24 @@ import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableScheduling
 @OpenAPIDefinition(
         info = @Info(
-                title = "Masking microservice",
+                title = "Facade microservice",
                 version = "1.0.0",
-                description = "Microservice for masking personal data",
+                description = "Microservice which is a bridge between front and backs",
                 termsOfService = "google.com",
                 contact = @Contact(
-                        name = "Chong Nguyen",
-                        email = "davidnguyen1432@gmail.com"
+                        name = "",
+                        email = ""
                 ),
                 license = @License (
                         name = "license",
-                        url = "clientcentre.com"
+                        url = ""
                 ))
 )
 public class ClientProfileFacadeApplication {

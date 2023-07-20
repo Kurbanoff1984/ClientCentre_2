@@ -29,4 +29,6 @@ public interface AvatarService {
     @Transactional
     public List<Avatar> getDuplicateAvatars(MultipartFile file);
     int сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification);
+    void clearBlackListUser();
+    MultipartFile checkBlackList(MultipartFile file,String profileIdentification);
 }

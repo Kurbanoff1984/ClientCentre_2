@@ -3,12 +3,14 @@ package com.kata.clientprofileavatar.dao;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.kata.clientprofileavatar.entity.Avatar;
+import com.kata.clientprofileavatar.entity.BlackList;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +19,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -25,47 +26,38 @@ import java.util.stream.Stream;
 public class AvatarDaoImp implements AvatarDao {
     @PersistenceContext
     private final EntityManager entityManager;
+    private final BlackListDao blackListDao;
+    private List<String> profileIdentificationBlackList;
 
     //методы сохранения аватара
     @Transactional
     public void addAvatarActive(MultipartFile file, String profileIdentification, boolean active) {
-        if (profileIdentification!=null) {
-            creatAvatarAdd(file, new Avatar(), active, profileIdentification);
-        } else {
-            throw new RuntimeException("Идентификатор профиля не указан");
-        }
+        blackListDao.checkOfNullEndLimitedID(profileIdentification,"ProfileIdentification");
+            creatAvatarAdd(checkBlackList(file,profileIdentification), new Avatar(), active, profileIdentification);
     }
 
     //методы изменения аватара
     @Override
     public void updateAvatar(MultipartFile file, Integer id) {
-        if (id>0&&id!=null){
+        blackListDao.checkOfNullEndLimitedID(id,"ID");
+            Avatar avatar=getAvatarById(id);
             log.info("Аватар из базы получен");
-            creatAvatarAdd(file,getAvatarById(id), getAvatarById(id).isActive(),null);
-        } else {
-            throw new RuntimeException("Обнавоение Аватарас с id = "+id+" невозможено");
-        }
-
+            creatAvatarAdd(checkBlackList(file, avatar.getProfileIdentification()),avatar, avatar.isActive(),null);
     }
     public void updateAvatarActive(MultipartFile file, Integer id, boolean active) {
-        if (id>0&&id!=null){
+        blackListDao.checkOfNullEndLimitedID(id,"ID");
             log.info("Аватар из базы получен");
-            creatAvatarAdd(file, getAvatarById(id), active,null);
-        } else {
-            throw new RuntimeException("Обнавоение Аватарас с id = "+id+" невозможено");
-        }
+            Avatar avatar=getAvatarById(id);
+            creatAvatarAdd(checkBlackList(file, avatar.getProfileIdentification()), avatar, active,null);
     }
 
 
     public void updateActive(Integer id, boolean active) {
-        if (id>0&&id!=null){
+        blackListDao.checkOfNullEndLimitedID(id,"ID");
             Avatar avatar = getAvatarById(id);
             log.info("Аватар из базы получен");
             avatar.setActive(active);
             creatAvatarAdd(null, avatar, active,null);
-        } else {
-            throw new RuntimeException("Обнавоение Аватарас с id = "+id+" невозможено");
-        }
     }
 
     // методы получения аватара
@@ -74,13 +66,7 @@ public class AvatarDaoImp implements AvatarDao {
     public Avatar getAvatarById(Integer id) {
             log.info("id переданно для поиска по БД");
             Avatar avatar=id!=null?entityManager.find(Avatar.class, id):new Avatar();
-            if (avatar!=null){
-                return avatar;
-            } else {
-                throw new NoResultException("Аватар с id: "+id+" ненайден");
-            }
-
-
+            return avatar;
 
     }
 
@@ -92,36 +78,31 @@ public class AvatarDaoImp implements AvatarDao {
     @Override
     @Transactional
     public Avatar getByAvatarUUID(String uuid) {
-        if (uuid!=null) {
-            log.info("uuid переданно для поиска по БД");
-            Query query = entityManager.createQuery("select avatar from Avatar avatar where avatar.uuid = :uuid", Avatar.class);
-            query.setParameter("uuid", uuid);
-            log.info("Аватар из базы получен");
-            return (Avatar) query.getSingleResult();
-        }else {
-            throw new RuntimeException("Поиска с uuid = "+uuid+" невозможен");
-        }
+        blackListDao.checkOfNullEndLimitedID(uuid,"uuid");
+        log.info("uuid переданно для поиска по БД");
+        Query query = entityManager.createQuery("select avatar from Avatar avatar where avatar.uuid = :uuid", Avatar.class);
+        query.setParameter("uuid", uuid);
+        log.info("Аватар из базы получен");
+        return (Avatar) query.getSingleResult();
     }
 
     @Override
     public List<Avatar> getListAvatarsByProfileIdentification(String profileIdentification) {
-        if (profileIdentification!=null) {
-            log.info("Производится поиск совподений в БД по идентификатору " + profileIdentification);
-            List<Avatar> resultAvatar = entityManager.createQuery("select avatar from Avatar avatar where avatar.profileIdentification = :profileIdentification", Avatar.class)
-                    .setParameter("profileIdentification", profileIdentification).getResultList();
-            if (resultAvatar.size() != 0) {
-                log.info("Изображение с идентификатором " + profileIdentification + " получено");
-            } else {
-                log.info("Совподения не найдены");
-                throw new NoResultException("Поиск по идентификатору: "+profileIdentification+" невозможен");
-            }
-            return resultAvatar;
+        blackListDao.checkOfNullEndLimitedID(profileIdentification,"ProfileIdentification");
+        log.info("Производится поиск совподений в БД по идентификатору " + profileIdentification);
+        List<Avatar> resultAvatar = entityManager.createQuery("select avatar from Avatar avatar where avatar.profileIdentification = :profileIdentification", Avatar.class)
+                .setParameter("profileIdentification", profileIdentification).getResultList();
+        if (resultAvatar.size() != 0) {
+            log.info("Изображение с идентификатором " + profileIdentification + " получено");
         } else {
-            throw new RuntimeException("Поиск по идентификатору: "+profileIdentification+" невозможен" );
+            log.info("Совподения не найдены");
+            throw new NoResultException("Поиск по идентификатору: " + profileIdentification + " невозможен");
         }
+        return resultAvatar;
     }
+
     public List<Avatar> getAvatarByActiveAndProfileIdentification(String profileIdentification, boolean active) {
-        if (profileIdentification!=null) {
+        blackListDao.checkOfNullEndLimitedID(profileIdentification,"ProfileIdentification");
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             log.info("Формирование запроса  для поиска");
             CriteriaQuery<Avatar> query = builder.createQuery(Avatar.class);
@@ -131,14 +112,12 @@ public class AvatarDaoImp implements AvatarDao {
             TypedQuery<Avatar> typedQuery = entityManager.createQuery(query);
             log.info("Данные получены");
             return typedQuery.getResultList();
-        } else {
-            throw new RuntimeException("Поиск по идентификатору: "+profileIdentification+" невозможен" );
-        }
+
 
     }
-
+    @Override
     public Avatar getAvatarByProfileIdentificationAndActive(String profileIdentification) {
-        if (profileIdentification!=null) {
+        blackListDao.checkOfNullEndLimitedID(profileIdentification,"ProfileIdentification");
             log.info("Формирование запроса  для поиска");
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Avatar> query = builder.createQuery(Avatar.class);
@@ -152,37 +131,37 @@ public class AvatarDaoImp implements AvatarDao {
             } catch (NoResultException e) {
                 throw new NoResultException("Активные аватары отсутствуют");
             }
-
-
-        } else {
-            throw new RuntimeException("Поиск по идентификатору: "+profileIdentification+" невозможен" );
-        }
     }
 
     //Методы удаления аватара
     @Override
     public void deleteAvatarById(Integer id) {
-        if (id>0&&id!=null){
+        blackListDao.checkOfNullEndLimitedID(id,"ID");
             log.info("аватар направлен на удаление");
             Avatar avatar = getAvatarById(id);
             log.info("аватар удален");
             entityManager.remove(avatar);
             refactorOfDeleteActivity(avatar);
-        } else {
-            throw new RuntimeException("удаление по id=: "+id+" невозможен" );
-        }
-
     }
     @Override
     public void deleteAvatarByProfileIdentification(String profileIdentification) {
-        if (profileIdentification!=null) {
+        blackListDao.checkOfNullEndLimitedID(profileIdentification,"ProfileIdentification");
             log.info("аватар направлен на удаление");
             Avatar avatar = getAvatarByProfileIdentificationAndActive(profileIdentification);
             entityManager.remove(avatar);
             log.info("аватар удален");
             refactorOfDeleteActivity(avatar);
+    }
+    @Override
+    public void deleteAvatarListOfProfileBannet(String profileIdentification) {
+        List<Avatar>avatarList=getListAvatarsByProfileIdentification(profileIdentification);
+        log.info("Иницировано удаление аватаров профиля");
+        if (avatarList.size()!=0) {
+            for (Avatar avatar : avatarList) {
+                entityManager.remove(avatar);
+            }
         } else {
-            throw new RuntimeException("Поиск по идентификатору: "+profileIdentification+" невозможен" );
+            log.info("Вбазе данных отсутствуют аватары с привязкой к этому профилю");
         }
     }
 
@@ -204,7 +183,7 @@ public class AvatarDaoImp implements AvatarDao {
             throw new RuntimeException(e);
         }
     }
-
+    @Override
     public Integer сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification) {
         try {
             byte[] imageOriginal = getAvatarByProfileIdentificationAndActive(profileIdentification).getByteSize();
@@ -215,7 +194,7 @@ public class AvatarDaoImp implements AvatarDao {
             double originalPixel = 0.0;
             double duplicatePixel = 0.0;
             for (int i = 0; i < imageOriginal.length; i++) {
-                int pixelOriginal = imageOriginal[i] & 0xff; // convert byte to unsigned int
+                int pixelOriginal = imageOriginal[i] & 0xff;
                 int pixelDuplicate = imageDuplicate[i] & 0xff;
                 multiPixel += pixelOriginal * pixelDuplicate;
                 originalPixel += pixelOriginal * pixelOriginal;
@@ -227,6 +206,49 @@ public class AvatarDaoImp implements AvatarDao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @SneakyThrows
+    public MultipartFile checkBlackList(MultipartFile file,String profileIdentification){
+        blackListDao.checkOfNullEndLimitedID(profileIdentification,profileIdentification);
+        if (true!= filterBlockUserBlackList(profileIdentification)){
+            throw new NoResultException("пользователь был забанен");
+        }
+        log.info("Фильтрация запущена");
+        byte[] imageDuplicate = file.getBytes();
+        for (BlackList blackList:blackListDao.getListOfAllBlackList()){
+            log.info("Из базы получен объект с id = "+blackList.getId());
+            byte[] imageOriginal = blackList.getByteSize();
+            double multiPixel = 0.0;
+            double originalPixel = 0.0;
+            double duplicatePixel = 0.0;
+            for (int i = 0; i < imageOriginal.length; i++) {
+                int pixelOriginal = imageOriginal[i] & 0xff;
+                int pixelDuplicate = imageDuplicate[i] & 0xff;
+                multiPixel += pixelOriginal * pixelDuplicate;
+                originalPixel += pixelOriginal * pixelOriginal;
+                duplicatePixel += pixelDuplicate * pixelDuplicate;
+            }
+            Integer result = (int) (multiPixel / (Math.sqrt(originalPixel) * Math.sqrt(duplicatePixel)) * 100);
+            log.info("Проверка совподений в % = "+result);
+            if (result>70&&blackList.getTypeBlackList().equals("List1")) {
+                log.info("fewfwf");
+                throw new NoResultException("данный материал не корректный повторите загрузку");
+            } else if (result>70&&blackList.getTypeBlackList().equals("List2")){
+                deleteAvatarListOfProfileBannet(profileIdentification);
+                banetUser(profileIdentification);
+                log.info("Проверка совподений в % = "+result);
+                break;
+            }
+
+        }
+
+            return file;
+    }
+    private void banetUser(String profileIdentification){
+        // когла будет сделана ручка заменим на ее вызов
+        profileIdentificationBlackList.add(profileIdentification);
+        log.error("Пользователь забанен");
     }
     //Внутриние мотоды обработки
     private void refactorOfDeleteActivity(Avatar avatar) {
@@ -248,25 +270,45 @@ public class AvatarDaoImp implements AvatarDao {
     }
 
     private void creatAvatarAdd(MultipartFile file, Avatar avatar, boolean active, String profileIdentification) {
-        log.info("Данные для формирования аватара получены");
-        try {
-            Avatar avatarUpdate = Avatar.builder()
-                    .uuid(avatar == null ? avatar.getUuid() : UUID.randomUUID().toString())
-                    .name(file == null ? avatar.getName() : file.getOriginalFilename())
-                    .fileSize(file == null ? avatar.getFileSize() : (int) file.getSize())
-                    .byteSize(file == null ? avatar.getByteSize() : file.getBytes())
-                    .profileIdentification(profileIdentification == null ? avatar.getProfileIdentification() : profileIdentification)
-                    .active(active)
-                    .md5(file == null ? avatar.getMd5() : String.valueOf(Hashing.md5().hashString(Arrays.toString(file.getBytes()), Charsets.UTF_8)))
-                    .id(avatar.getId())
-                    .build();
-            log.info("преобразования мультифайла прошло успешно");
-            refactorActivity(avatarUpdate);
-            entityManager.merge(avatarUpdate);
-            log.info("Данные по Аватару сохранены в БД");
-        } catch (IOException e) {
-            throw new RuntimeException("Сохранение аватара прошло неудачно");
+        if (filterBlockUserBlackList(avatar.getProfileIdentification()!=null?avatar.getProfileIdentification():profileIdentification)) {
+            log.info("Данные для формирования аватара получены");
+            try {
+                Avatar avatarUpdate = Avatar.builder()
+                        .uuid(avatar == null ? avatar.getUuid() : UUID.randomUUID().toString())
+                        .name(file == null ? avatar.getName() : file.getOriginalFilename())
+                        .fileSize(file == null ? avatar.getFileSize() : (int) file.getSize())
+                        .byteSize(file == null ? avatar.getByteSize() : file.getBytes())
+                        .profileIdentification(profileIdentification == null ? avatar.getProfileIdentification() : profileIdentification)
+                        .active(active)
+                        .md5(file == null ? avatar.getMd5() : String.valueOf(Hashing.md5().hashString(Arrays.toString(file.getBytes()), Charsets.UTF_8)))
+                        .id(avatar.getId())
+                        .build();
+                log.info("преобразования мультифайла прошло успешно");
+                refactorActivity(avatarUpdate);
+                entityManager.merge(avatarUpdate);
+                log.info("Данные по Аватару сохранены в БД");
+            } catch (IOException e) {
+                throw new RuntimeException("Сохранение аватара прошло неудачно");
+            }
+        } else {
+            log.error("пользователь забанен");
         }
+    }
+    //Методы проверки блек листа
+    public boolean filterBlockUserBlackList(String profileIdentification){
+        log.info("Проверка пользователя на бан");
+        for (String checkFilter:profileIdentificationBlackList){
+            if (checkFilter.equals(profileIdentification)){
+                return false;
+            }
+        }
+        log.info("Проверка пользователя на бан пройдена");
+        return true;
+    }
+    @Override
+    public void clearBlackListUser(){
+        log.info("очистка списка забаненых");
+        profileIdentificationBlackList.clear();
 
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class AvatarServiceImpl implements AvatarService {
-    private AvatarDao avatarDao;
+    private final AvatarDao avatarDao;
 
     @Override
     @Transactional
@@ -85,4 +85,15 @@ public class AvatarServiceImpl implements AvatarService {
     public int сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification) {
         return avatarDao.сheckPercentDuplicateAvatars(file,profileIdentification);
     }
+    @Override
+    @Transactional
+    public MultipartFile checkBlackList(MultipartFile file,String profileIdentification) {
+        return avatarDao.checkBlackList(file,profileIdentification);
+    }
+    @Override
+    @Transactional
+    public void clearBlackListUser(){
+        avatarDao.clearBlackListUser();
+    }
+
 }

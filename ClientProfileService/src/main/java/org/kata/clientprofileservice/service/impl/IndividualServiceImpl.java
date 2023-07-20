@@ -1,6 +1,7 @@
 package org.kata.clientprofileservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.kata.clientprofileservice.util.statusDto.IndividualStatusDto;
 import org.kata.clientprofileservice.repository.IndividualRepo;
 import org.kata.clientprofileservice.service.IndividualService;
 
@@ -27,6 +28,11 @@ public class IndividualServiceImpl implements IndividualService {
 
     private final ModelMapper modelMapper;
 
+
+    @Override
+    public void save(Individual individual) {
+        individualRepo.save(individual);
+    }
 
     @Override
     @Transactional
@@ -56,19 +62,19 @@ public class IndividualServiceImpl implements IndividualService {
     }
 
     /**
-     * находит пользователя по icp или uuid
-     * @param id
-     * @param type
-     * @return
+     * Находит пользователя по icp и конвертирует в формат IndividualStatusDto для проверки статуса
+     * @param id - значение уникального идентификатора пользователя (UUID, ICP)
+     * @param type - тип уникального идентификатора (UUID, ICP)
+     * @return IndividualStatusDto
      */
     @Override
-    public IndividualResponseDto findIndividual(String id, String type)  {
+    public IndividualStatusDto findIndividualForVerificationStatus(String id, String type) {
         if (type.equals("UUID")) {
             individualValidation.isExistIndividualByUuid(id);
-            return modelMapper.map(individualRepo.findById(id).get(), IndividualResponseDto.class);
+            return modelMapper.map(individualRepo.findById(id).get(), IndividualStatusDto.class);
         } else if (type.equals("ICP")){
             individualValidation.isExistIndividualByIcp(id);
-            return modelMapper.map(individualRepo.findIndividualByIcp(id).get(), IndividualResponseDto.class);
+            return modelMapper.map(individualRepo.findIndividualByIcp(id).get(), IndividualStatusDto.class);
         } else {
             throw new IllegalArgumentException("this type of identifier does not exist");
         }
