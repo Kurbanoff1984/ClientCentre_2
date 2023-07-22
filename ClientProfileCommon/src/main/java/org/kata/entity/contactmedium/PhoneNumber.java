@@ -1,5 +1,6 @@
 package org.kata.entity.contactmedium;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,6 @@ public class PhoneNumber {
     private ContactMedium contactMedium;
 
     @Column(name = "phone")
-    private String value;
+    private String valuePhone;
 
 }

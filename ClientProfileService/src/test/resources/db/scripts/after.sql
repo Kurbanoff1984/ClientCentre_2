@@ -1,0 +1,1 @@
+TRUNCATE TABLE project.micro.individual CASCADE;

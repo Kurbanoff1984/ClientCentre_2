@@ -1,16 +1,20 @@
 package org.kata.entity.individual;
 
 
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UuidGenerator;
 import org.kata.entity.contactmedium.ContactMedium;
 import org.kata.entity.document.Documents;
+import org.kata.enums.IndividualStatus;
 
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
@@ -20,7 +24,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name = "individual")
 @Entity
+@ToString
 public class Individual {
+
 
     @Id
     @UuidGenerator
@@ -42,25 +48,41 @@ public class Individual {
     private String placeOfBirth;
     @Column(name = "country_of_birth")
     private String countryOfBirth;
-
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+    @JsonManagedReference
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) //(mappedBy = "individual"****
+    @JoinColumn(name = "documents_id")
 
     @Column(name = "documents")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Documents documents;
 
-    @Column(name = "contacts")
+
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "contacts_id")
     private ContactMedium contacts;
-
-
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "avatar_id")
     private Avatar avatar;
-
-    @OneToMany(mappedBy = "individual", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "individual", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<Address> address;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private IndividualStatus status;
+    @Column(name = "date_status")
+    private LocalDateTime dateStatus;
+
+    @PrePersist
+    public void setDefaultStatusValues() {
+        if (status == null) {
+            status = IndividualStatus.NOT_CLIENT;
+        }
+    }
 
 }

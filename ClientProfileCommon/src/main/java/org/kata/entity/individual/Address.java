@@ -1,11 +1,10 @@
 package org.kata.entity.individual;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -43,8 +42,7 @@ public class Address {
     private String house;
     private String housing;
     private String building;
-
-
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "individual_id", referencedColumnName = "id")
     private Individual individual;

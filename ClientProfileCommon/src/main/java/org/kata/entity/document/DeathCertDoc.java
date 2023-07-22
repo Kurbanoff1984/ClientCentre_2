@@ -40,9 +40,10 @@ public class DeathCertDoc {
     @Temporal(TemporalType.DATE)
     private Date getDateDoc;
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id", referencedColumnName = "id")
     private Documents documents;
+
+
 }
 

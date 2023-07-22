@@ -23,10 +23,10 @@ public class FrgnPassportDoc {
     private String uuid;
 
     @Column(name = "series", nullable = false)
-    private String series;
+    private String seriesFP;
 
     @Column(name = "number", nullable = false)
-    private String number;
+    private String numberFP;
 
     @Column(name = "issued_date")
     @Temporal(value = TemporalType.DATE)

@@ -1,5 +1,6 @@
 package org.kata.entity.contactmedium;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,15 +25,15 @@ public class ContactMedium {
     @UuidGenerator
     @Column(name = "id")
     private String uuid;
-
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "individual_id")
     private Individual individual;
 
 
-    @OneToMany(mappedBy = "contactMedium", fetch = FetchType.EAGER)
-    private Collection<Email> emails = new ArrayList<>();
+    @OneToMany(mappedBy = "contactMedium", fetch = FetchType.LAZY)
+    private Collection<Email> emails;
 
-    @OneToMany(mappedBy = "contactMedium", fetch = FetchType.EAGER)
-    private Collection<PhoneNumber> phoneNumbers = new ArrayList<>();
+    @OneToMany(mappedBy = "contactMedium", fetch = FetchType.LAZY)
+    private Collection<PhoneNumber> phoneNumbers;
 }

@@ -1,5 +1,6 @@
 package org.kata.entity.document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,10 @@ public class RFPassportDoc {
     private String uuid;
 
     @Column(name = "series", nullable = false)
-    private String series;
+    private String seriesRFP;
 
     @Column(name = "number", nullable = false)
-    private String number;
+    private String numberRFP;
 
     @Column(name = "issued_date")
     @Temporal(value = TemporalType.DATE)
