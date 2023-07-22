@@ -36,7 +36,7 @@ public class DeathCertDoc {
     @Column(name = "department")
     private String departmentDoc;
 
-    @Column(name = "date")
+    @Column(name = "issued_date")
     @Temporal(TemporalType.DATE)
     private Date getDateDoc;
 

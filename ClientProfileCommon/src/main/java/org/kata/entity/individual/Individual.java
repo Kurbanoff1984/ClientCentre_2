@@ -55,7 +55,12 @@ public class Individual {
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) //(mappedBy = "individual"****
     @JoinColumn(name = "documents_id")
+
+    @Column(name = "documents")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Documents documents;
+
+
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "contacts_id")
