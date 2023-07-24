@@ -1,4 +1,4 @@
-package com.kata.clientprofilefacade.exception.phonenumberexception;
+package com.kata.clientprofilefacade.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

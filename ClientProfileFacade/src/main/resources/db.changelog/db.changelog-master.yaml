@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - include:
+      file: ./db.changelog/test.sql
+  - changeSet:
+      id: update_city_value
+      author: Chong
+      changes:
+        - update:
+            tableName: ip_ranges
+            columns:
+              - column:
+                  name: city
+                  value: Naberezhnye Chelny
+            where: "1=1"
+  - changeSet:
+      id: update_start_ip
+      author: Chong
+      changes:
+        - update:
+            tableName: ip_ranges
+            columns:
+              - column:
+                  name: start_ip
+                  value: 127.0.0.1
+            where: "1=1"
+  - changeSet:
+      id: insert_new_data
+      author: Chong
+      changes:
+        - insert:
+            tableName: ip_ranges
+            columns:
+              - column:
+                  name: start_ip
+                  value: '192.168.0.1'
+              - column:
+                  name: end_ip
+                  value: '192.168.0.255'
+              - column:
+                  name: city
+                  value: 'Omsk'
+  - changeSet:
+      id: update_ip_addresses_omsk
+      author: Chong
+      changes:
+        - update:
+            tableName: ip_ranges
+            columns:
+              - column:
+                  name: start_ip
+                  value: '192.168.0.256'
+              - column:
+                  name: end_ip
+                  value: '200.165.0.257'
+            where: "id = 2"
+  - changeSet:
+      id: update_ip_addresses_omsk_1.1
+      author: Chong
+      changes:
+        - update:
+            tableName: ip_ranges
+            columns:
+              - column:
+                  name: start_ip
+                  value: '192.168.0.255'
+              - column:
+                  name: end_ip
+                  value: '200.165.0.255'
+            where: "id = 2"
+  - changeSet:
+      id: update_start_ip_addresses_omsk
+      author: Chong
+      changes:
+        - update:
+            tableName: ip_ranges
+            columns:
+              - column:
+                  name: start_ip
+                  value: '193.168.0.255'
+            where: "id = 2"
+

@@ -18,6 +18,8 @@ public class BalanceController {
 
     /**
      * This method allows you to get the user's balance by icp
+     * @param icp - icp user
+     * @param currencies - example(USD,EUR)
      */
     @GetMapping("/balance")
     public <T> ResponseEntity <T> getBalance(@RequestParam("icp") String icp, @RequestParam("currencies") String currencies)  {

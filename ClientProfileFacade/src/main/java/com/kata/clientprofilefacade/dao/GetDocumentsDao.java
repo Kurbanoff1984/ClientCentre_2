@@ -1,7 +1,6 @@
 package com.kata.clientprofilefacade.dao;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.kata.dto.response.DocumentsResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface GetDocumentsDao {

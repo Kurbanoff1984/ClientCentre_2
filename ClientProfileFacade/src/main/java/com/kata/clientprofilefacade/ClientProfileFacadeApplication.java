@@ -14,17 +14,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @OpenAPIDefinition(
         info = @Info(
-                title = "Facade microservice",
-                version = "1.0.0",
-                description = "Microservice which is a bridge between front and backs",
-                termsOfService = "google.com",
+                title = "${project.mcs.name}",
+                version = "${version.mcs.prod}",
+                description = "${author.description.prod}",
+                termsOfService = "${project.mcs.termsOfService}",
                 contact = @Contact(
-                        name = "",
-                        email = ""
+                        name = "${author.openapi.prod}",
+                        email = "${author.email.openapi.prod}"
                 ),
                 license = @License (
                         name = "license",
-                        url = ""
+                        url = "${project.openapi.prod-url}"
                 ))
 )
 public class ClientProfileFacadeApplication {

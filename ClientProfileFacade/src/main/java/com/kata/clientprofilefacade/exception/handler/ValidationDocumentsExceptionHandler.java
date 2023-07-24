@@ -1,9 +1,9 @@
 package com.kata.clientprofilefacade.exception.handler;
 
-import com.kata.clientprofilefacade.exception.individualexception.InvalidFullNameException;
-import com.kata.clientprofilefacade.exception.phonenumberexception.InvalidPhoneNumberException;
-import com.kata.clientprofilefacade.exception.rfpassportdocexception.InvalidPassportNumberException;
-import com.kata.clientprofilefacade.exception.rfpassportdocexception.InvalidPassportSeriesException;
+import com.kata.clientprofilefacade.exception.InvalidFullNameException;
+import com.kata.clientprofilefacade.exception.InvalidPhoneNumberException;
+import com.kata.clientprofilefacade.exception.InvalidPassportNumberException;
+import com.kata.clientprofilefacade.exception.InvalidPassportSeriesException;
 import org.kata.erroresponse.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

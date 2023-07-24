@@ -1,6 +1,6 @@
 package com.kata.clientprofilefacade.util;
 
-import com.kata.clientprofilefacade.exception.phonenumberexception.InvalidPhoneNumberException;
+import com.kata.clientprofilefacade.exception.InvalidPhoneNumberException;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.kata.clientprofilefacade.constant.PhoneNumberRegExp.PHONE_NUMBER_FORMAT;

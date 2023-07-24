@@ -1,7 +1,7 @@
 package com.kata.clientprofilefacade.util;
 
 
-import com.kata.clientprofilefacade.exception.individualexception.InvalidFullNameException;
+import com.kata.clientprofilefacade.exception.InvalidFullNameException;
 import lombok.extern.slf4j.Slf4j;
 import org.kata.dto.response.IndividualResponseDto;
 
