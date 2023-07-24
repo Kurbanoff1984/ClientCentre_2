@@ -1,6 +1,6 @@
 package com.kata.clientprofileavatar.service;
 
-import com.kata.clientprofileavatar.entity.BlackList;
+import com.kata.clientprofileavatar.entity.entityAvatar.BlackList;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

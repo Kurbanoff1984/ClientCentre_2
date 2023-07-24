@@ -1,4 +1,4 @@
-package com.kata.clientprofileavatar.entity;
+package com.kata.clientprofileavatar.entity.entityAvatar;
 
 
 import com.google.common.base.Charsets;

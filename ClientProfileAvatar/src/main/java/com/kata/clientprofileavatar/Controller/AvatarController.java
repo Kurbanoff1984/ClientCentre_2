@@ -1,7 +1,7 @@
 package com.kata.clientprofileavatar.Controller;
 
 
-import com.kata.clientprofileavatar.entity.Avatar;
+import com.kata.clientprofileavatar.entity.entityAvatar.Avatar;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

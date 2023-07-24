@@ -1,8 +1,7 @@
 package com.kata.clientprofileavatar.service;
 
-import com.kata.clientprofileavatar.dao.AvatarDao;
 import com.kata.clientprofileavatar.dao.BlackListDao;
-import com.kata.clientprofileavatar.entity.BlackList;
+import com.kata.clientprofileavatar.entity.entityAvatar.BlackList;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.kata.clientprofileavatar.Controller;
 
-import com.kata.clientprofileavatar.entity.BlackList;
+import com.kata.clientprofileavatar.entity.entityAvatar.BlackList;
 import com.kata.clientprofileavatar.service.AvatarService;
 import com.kata.clientprofileavatar.service.BlackListService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,15 +41,6 @@ public class BlackListController {
     public void saveBlackList2(@RequestParam("file") MultipartFile file) {
         blackListService.addBlackList(file,"List2");
     }
-    @PostMapping(path = "/duplicate",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Проверка изображения на совподение с BlackList")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = BlackList.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema(defaultValue = "Сравнение прошло неудачно")) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-    public void checkBlackList(@RequestParam("file") MultipartFile file,@RequestParam("profileIdentification") String profileIdentification) {
-        avatarService.checkBlackList(file, profileIdentification);
-    }
     @GetMapping("/get/id")
     @Operation(summary = "Получить BlackList по его id")
     @ApiResponses({
@@ -59,16 +50,7 @@ public class BlackListController {
     public ResponseEntity<?> getBlackListId(@RequestParam Integer id) {
         return new ResponseEntity<>(blackListService.getOneBlackListId(id), HttpStatus.OK);
     }
-    @DeleteMapping("/clearBlackList")
-    @Operation(summary = "очистить BlackList юзеров")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema(defaultValue = "Очистка списка забаненых прошла неудачно")) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-    public ResponseEntity<HttpStatus> clearBlackListUser() {
-        avatarService.clearBlackListUser();
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
+
     @DeleteMapping("/delete/id")
     @Operation(summary = "Удалить BlackList по его id")
     @ApiResponses({

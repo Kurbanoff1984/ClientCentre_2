@@ -1,6 +1,6 @@
 package com.kata.clientprofileavatar.dao;
 
-import com.kata.clientprofileavatar.entity.BlackList;
+import com.kata.clientprofileavatar.entity.entityAvatar.BlackList;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;

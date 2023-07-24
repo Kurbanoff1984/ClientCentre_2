@@ -1,6 +1,6 @@
 package com.kata.clientprofileavatar.service;
 
-import com.kata.clientprofileavatar.entity.Avatar;
+import com.kata.clientprofileavatar.entity.entityAvatar.Avatar;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +29,4 @@ public interface AvatarService {
     @Transactional
     public List<Avatar> getDuplicateAvatars(MultipartFile file);
     int сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification);
-    void clearBlackListUser();
-    MultipartFile checkBlackList(MultipartFile file,String profileIdentification);
 }

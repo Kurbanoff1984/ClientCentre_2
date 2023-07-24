@@ -1,7 +1,7 @@
 package com.kata.clientprofileavatar.service;
 
 import com.kata.clientprofileavatar.dao.AvatarDao;
-import com.kata.clientprofileavatar.entity.Avatar;
+import com.kata.clientprofileavatar.entity.entityAvatar.Avatar;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -85,15 +85,4 @@ public class AvatarServiceImpl implements AvatarService {
     public int сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification) {
         return avatarDao.сheckPercentDuplicateAvatars(file,profileIdentification);
     }
-    @Override
-    @Transactional
-    public MultipartFile checkBlackList(MultipartFile file,String profileIdentification) {
-        return avatarDao.checkBlackList(file,profileIdentification);
-    }
-    @Override
-    @Transactional
-    public void clearBlackListUser(){
-        avatarDao.clearBlackListUser();
-    }
-
 }

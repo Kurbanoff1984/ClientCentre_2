@@ -1,6 +1,6 @@
 package com.kata.clientprofileavatar.dao;
 
-import com.kata.clientprofileavatar.entity.Avatar;
+import com.kata.clientprofileavatar.entity.entityAvatar.Avatar;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,10 +19,10 @@ public interface AvatarDao {
     void updateAvatarActive(MultipartFile file, Integer id, boolean active);
     Avatar getAvatarByProfileIdentificationAndActive(String profileIdentification);
     void deleteAvatarByProfileIdentification(String profileIdentification);
-    void deleteAvatarListOfProfileBannet(String profileIdentification);
     void updateActive(Integer id, boolean active);
     List<Avatar> getDuplicateAvatars(MultipartFile file);
     Integer сheckPercentDuplicateAvatars(MultipartFile file, String profileIdentification);
-    MultipartFile checkBlackList(MultipartFile file,String profileIdentification);
-    void clearBlackListUser();
+    boolean checkBlackList(MultipartFile file, String profileIdentification);
+
+
 }
