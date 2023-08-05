@@ -51,12 +51,10 @@ public class Individual {
     @Column(name = "birth_date")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+
     @JsonManagedReference
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) //(mappedBy = "individual"****
-    @JoinColumn(name = "documents_id")
-
-    @Column(name = "documents")
+    @PrimaryKeyJoinColumn(name = "documents")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Documents documents;
 
