@@ -2,8 +2,6 @@ package org.kata.clientprofileloader.service.Impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kata.clientprofileloader.service.DocumentsService;
-import org.kata.clientprofileloader.service.KafkaConsumerService;
-import org.kata.dto.response.DocumentsResponseDto;
 import org.kata.dto.response.IndividualResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,15 +12,14 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class KafkaConsumerImpl implements KafkaConsumerService {
+public class KafkaConsumerImpl {
     private final DocumentsService documentsService;
 @Autowired
     public KafkaConsumerImpl(DocumentsService documentsService) {
         this.documentsService = documentsService;
     }
 
-    @Override
-    @KafkaListener(topics = "recognition_document")
+    @KafkaListener(topics = "recognition_document", groupId = "group_id")
     public List<String> KafkaListener(IndividualResponseDto individualResponseDto, String icp) {
         List<String> errDto = new ArrayList<>();
         IndividualResponseDto individualResponseDto1 = individualResponseDto;

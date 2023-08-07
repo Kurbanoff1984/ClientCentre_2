@@ -1,13 +1,12 @@
 package org.kata.clientprofileloader.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.kata.clientprofileloader.repository.DocumentsRepo;
-import org.kata.clientprofileloader.repository.IndividualRepo;
 import org.kata.clientprofileloader.service.DocumentsService;
 import org.kata.dto.response.DocumentsResponseDto;
 import org.kata.dto.response.IndividualResponseDto;
 import org.kata.entity.document.Documents;
-import org.modelmapper.ModelMapper;
+import org.kata.repository.DocumentsRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -17,9 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class DocumentsServiceImpl implements DocumentsService {
-    private final DocumentsRepo documentsRepo;
-    private final IndividualRepo individualRepo;
-    private final ModelMapper modelMapper;
+
+    private final DocumentsRepository documentsRepository;
+
+    private final ObjectMapper modelMapper;
 
     /**
      * Метод для получения документов в формате DocumentsResponseDto по uuid пользователя
@@ -29,8 +29,8 @@ public class DocumentsServiceImpl implements DocumentsService {
 
     @Override
     public DocumentsResponseDto getDocumentsByUuidIndividual(String uuidInd) {
-        Documents documents = documentsRepo.getDocumentsByUuidIndividual(uuidInd);
-        DocumentsResponseDto documentsResponseDto = modelMapper.map(documents, DocumentsResponseDto.class);
+        Documents documents = documentsRepository.getReferenceById(uuidInd);
+        DocumentsResponseDto documentsResponseDto = modelMapper.convertValue(documents, DocumentsResponseDto.class);
         return documentsResponseDto;
     }
 
@@ -42,9 +42,6 @@ public class DocumentsServiceImpl implements DocumentsService {
     @Override
     public void createNewDocumentsForIndividual(IndividualResponseDto individual) {
         Documents documents = new Documents();
-        documents.setIndividual(individual);
-        individual.setDocuments(documents);
-        individualRepo.save(individual);
     }
 
 

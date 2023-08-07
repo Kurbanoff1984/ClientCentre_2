@@ -1,6 +1,5 @@
 package org.kata.clientprofileloader.service;
 
-import com.google.protobuf.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,7 @@ public class ContactMediumService {
             return contactMediumRepository.getContactMediumByUuid(uuid);
         } catch (Exception e) {
             log.error("Ошибка при получении контакта для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при получении контакта для клиента");
+            throw new RuntimeException("Ошибка при получении контакта для клиента");
         }
     }
 
@@ -39,7 +38,7 @@ public class ContactMediumService {
             return contactMediumRepository.save(contactMedium);
         } catch (Exception e) {
             log.error("Ошибка при добавлении контакта для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при добавлении контакта для клиента");
+            throw new RuntimeException("Ошибка при добавлении контакта для клиента");
 
         }
     }
@@ -51,7 +50,7 @@ public class ContactMediumService {
             return contactMediumRepository.save(contactMedium);
         } catch (Exception e) {
             log.error("Ошибка при обновлении контакта для клиента с UUID: {}", contactMedium.getUuid(), e);
-            throw new ServiceException("Ошибка при обновлении контакта для клиента");
+            throw new RuntimeException("Ошибка при обновлении контакта для клиента");
         }
     }
 
@@ -67,7 +66,7 @@ public class ContactMediumService {
             return false;
         } catch (Exception e) {
             log.error("Ошибка при удалении контакта для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при удалении контакта для клиента");
+            throw new RuntimeException("Ошибка при удалении контакта для клиента");
         }
     }
 }

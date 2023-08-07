@@ -1,19 +1,14 @@
 package org.kata.clientprofileloader.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kata.clientprofileloader.service.DocumentService;
 import org.kata.entity.document.Documents;
-import org.kata.entity.individual.Address;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.kata.clientprofileloader.service.DocumentService;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +19,10 @@ import java.util.Optional;
 @Tag(name = "Документы клиента", description = "Методы для работы с документами клиента")
 @RequestMapping("/api/client/documents")
 public class DocumentController {
+
     private final DocumentService documentService;
 
     @Operation(summary = "Получение списка документов клиента", description = "Получает список документов клиента по его icp")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Список успешно получен", response = Address.class),
-            @ApiResponse(code = 404, message = "Список не найден")})
     @GetMapping("getAllDocuments/{icp}")
     public ResponseEntity<List<Documents>> getClientDocuments(@PathVariable String icp) {
         log.info("Получение списка документов для клиента с icp: {}", icp);
@@ -39,9 +32,6 @@ public class DocumentController {
     }
 
     @Operation(summary = "Получает документ клиента", description = "Получает  документ клиента по его icp")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Документ успешно получен", response = Address.class),
-            @ApiResponse(code = 404, message = "Документ не найден")})
     @GetMapping("getDocument/{icp}")
     public ResponseEntity<Documents> getClientDocument(@PathVariable String icp) {
         log.info("Получение документа с icp: {}", icp);
@@ -56,9 +46,6 @@ public class DocumentController {
     }
 
     @Operation(summary = "Добавить документ клиента", description = "Добавляет  документ клиента по его icp")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Документ успешно добавлен", response = Address.class),
-            @ApiResponse(code = 404, message = "Документ не добавлен")})
     @PostMapping("/postDocument/{icp}")
     //DocumentDto
     public ResponseEntity<Documents> addClientDocument(@PathVariable String icp, @RequestBody Documents document) {
@@ -67,9 +54,6 @@ public class DocumentController {
     }
 
     @Operation(summary = "Обновляет документ клиента", description = "Обновлеят  документ клиента по его icp")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Документ успешно обновлен", response = Address.class),
-            @ApiResponse(code = 404, message = "Документ не обновлен")})
     @PutMapping("/putDocument/{icp}")
     public ResponseEntity<Documents> updateClientDocument(@PathVariable String icp) {
         log.info("Обновление документа с icp: {} для клиента", icp);
@@ -79,9 +63,6 @@ public class DocumentController {
     }
 
     @Operation(summary = "Удаляет документ клиента", description = "Удаляет  документ клиента по его icp")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Документ успешно удален", response = Address.class),
-            @ApiResponse(code = 404, message = "Документ не удален")})
     @DeleteMapping("/deleteDocument/{icp}")
     public ResponseEntity<Documents> deleteClientDocument(@PathVariable String icp) {
         log.info("Удаление документа с icp: {} для клиента ", icp);

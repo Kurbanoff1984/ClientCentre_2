@@ -1,9 +1,7 @@
 package org.kata.clientprofileloader.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kata.clientprofileloader.entity.Individual;
-import org.kata.clientprofileloader.service.IndividualService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.kata.entity.individual.Individual;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,15 +9,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class IndividualController {
 
-    private final IndividualService individualService;
-
     @GetMapping(value = "/individual")
     public Individual getIndividual(@RequestParam String id, @RequestParam String type) {
-        return individualService.findIndividual(id, type);
+        //TODO запрос в БД по ключу или icp или uuid реализовать
+        return null;
     }
 
     @PostMapping(value = "/individual")
     public Individual setIndividual(@RequestBody Individual individual) {
-        return individualService.saveIndividual(individual);
+        //TODO запрос в БД создание пользователя
+        return null;
     }
 }

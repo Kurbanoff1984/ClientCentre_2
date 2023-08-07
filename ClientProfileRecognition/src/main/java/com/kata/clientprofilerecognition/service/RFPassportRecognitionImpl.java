@@ -1,6 +1,6 @@
 package com.kata.clientprofilerecognition.service;
 
-import com.kata.clientprofilerecognition.dto.RFPassportRecognitionDto;
+import com.kata.clientprofilerecognition.dto.RFPassportDocRecognitionDto;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -31,7 +31,7 @@ public class RFPassportRecognitionImpl implements RFPassportRecognitionService{
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath("ClientProfileRecognition/src/main/resources/tessdata");
         tesseract.setLanguage("rus");
-        RFPassportRecognitionDto rFPassportRecognitionDto = new RFPassportRecognitionDto();
+        RFPassportDocRecognitionDto rFPassportRecognitionDto = new RFPassportDocRecognitionDto();
         try {
 
             rFPassportRecognitionDto.setIssuedBy(tesseract

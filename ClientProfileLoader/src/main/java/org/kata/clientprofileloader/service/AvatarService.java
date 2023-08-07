@@ -1,6 +1,5 @@
 package org.kata.clientprofileloader.service;
 
-import com.google.protobuf.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,7 @@ public class AvatarService {
             return avatarRepository.getAvatarByUuid(uuid);
         } catch (Exception e) {
             log.error("Ошибка при получении аватара для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при получении аватара для клиента");
+            throw new RuntimeException("Ошибка при получении аватара для клиента");
         }
     }
 
@@ -38,7 +37,7 @@ public class AvatarService {
             return avatarRepository.save(avatar);
         } catch (Exception e) {
             log.error("Ошибка при добавлении аватара для клиента с ID: {}", uuid, e);
-            throw new ServiceException("Ошибка при добавлении аватара для клиента");
+            throw new RuntimeException("Ошибка при добавлении аватара для клиента");
         }
     }
 
@@ -49,7 +48,7 @@ public class AvatarService {
             return avatarRepository.save(avatar);
         } catch (Exception e) {
             log.error("Ошибка при обновлении аватара с UUID: {}", avatar.getUuid(), e);
-            throw new ServiceException("Ошибка при обновлении аватара");
+            throw new RuntimeException("Ошибка при обновлении аватара");
         }
     }
 
@@ -65,7 +64,7 @@ public class AvatarService {
             return false;
         } catch (Exception e) {
             log.error("Ошибка при удалении аватара для клиента с ID: {}", uuid, e);
-            throw new ServiceException("Ошибка при удалении аватара для клиента");
+            throw new RuntimeException("Ошибка при удалении аватара для клиента");
         }
     }
 }

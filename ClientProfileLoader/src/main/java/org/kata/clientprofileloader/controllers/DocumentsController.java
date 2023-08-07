@@ -3,7 +3,7 @@ package org.kata.clientprofileloader.controllers;
 import lombok.AllArgsConstructor;
 import org.kata.clientprofileloader.service.DocumentsService;
 import org.kata.dto.response.DocumentsResponseDto;
-import org.kata.entity.individual.Individual;
+import org.kata.dto.response.IndividualResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class DocumentsController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> createDocuments(@RequestBody Individual individual) {
+    public ResponseEntity<Void> createDocuments(@RequestBody IndividualResponseDto individual) {
         documentsService.createNewDocumentsForIndividual(individual);
         return new ResponseEntity<>(HttpStatus.OK);
     }

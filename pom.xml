@@ -18,6 +18,7 @@
 
     <!-- микросервисы -->
     <modules>
+        <module>ClientProfileAuthentication</module>
         <module>ClientProfileAvatar</module>
         <module>ClientProfileFacade</module>
         <module>ClientProfileCommon</module>
@@ -39,7 +40,6 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.2</version>
         </dependency>
-
     </dependencies>
 
  <build>

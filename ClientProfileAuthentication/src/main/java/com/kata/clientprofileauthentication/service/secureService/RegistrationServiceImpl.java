@@ -5,6 +5,7 @@ import com.kata.clientprofileauthentication.models.auth.dto.AuthLoginAndPassword
 import com.kata.clientprofileauthentication.models.auth.dto.RegistrationForm;
 import com.kata.clientprofileauthentication.repository.secureRepository.SecureRepository;
 import com.kata.clientprofileauthentication.util.LoginAndPassGenerator;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,11 +18,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@AllArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
+
     private final LoginAndPassGenerator loginAndPassGenerator;
+
     private final SecureRepository secureRepository;
+
     private final ModelMapper modelMapper;
+
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -47,6 +52,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     /**
      * сервис для валидации логина и пароля
+     *
      * @param authLoginAndPassword - вход по логину и паролю
      * @return //
      */
@@ -66,6 +72,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     /**
      * флаг того, что пользователь уже аутентифицирован
+     *
      * @param authLoginAndPassword - входная форма логина и пароля
      * @return //
      */
@@ -77,6 +84,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     /**
      * проверка на то, что входная форма уникальная (фио)
      * проверка на то, что пользователя под таким email не существует
+     *
      * @param registrationForm - входня форма регистрации
      * @return //
      */

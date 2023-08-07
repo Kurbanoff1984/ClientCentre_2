@@ -1,6 +1,5 @@
 package org.kata.clientprofileloader.service;
 
-import com.google.protobuf.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,7 @@ public class AddressService {
             return addressRepository.getAddressByUuid(uuid);
         } catch (Exception e) {
             log.error("Ошибка при получении адреса для клиента с UUID: {}",uuid);
-            throw new ServiceException("Ошибка при получении адреса для клиента");
+            throw new RuntimeException("Ошибка при получении адреса для клиента");
         }
     }
     //добавить адрес
@@ -36,7 +35,7 @@ public class AddressService {
             return addressRepository.save(address);
         } catch (Exception e) {
             log.error("Ошибка при добавлении адреса для клиента с ID: {}", uuid, e);
-            throw new ServiceException("Ошибка при добавлении адреса для клиента");
+            throw new RuntimeException("Ошибка при добавлении адреса для клиента");
         }
     }
     //обновить адрес
@@ -46,7 +45,7 @@ public class AddressService {
             return addressRepository.save(address);
         } catch (Exception e) {
             log.error("Ошибка при обновлении адреса с ID: {}", address.getUuid(), e);
-            throw new ServiceException("Ошибка при обновлении адреса");
+            throw new RuntimeException("Ошибка при обновлении адреса");
         }
     }
     //удалить адрес
@@ -61,7 +60,7 @@ public class AddressService {
             return false;
         } catch (Exception e) {
             log.error("Ошибка при удалении адреса для клиента с ID: {}", uuid, e);
-            throw new ServiceException("Ошибка при удалении адреса для клиента");
+            throw new RuntimeException("Ошибка при удалении адреса для клиента");
         }
     }
 }

@@ -3,15 +3,12 @@ package org.kata.clientprofileservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kata.clientprofileservice.service.impl.IndividualServiceImpl;
 import org.kata.clientprofileservice.validation.fieldEntityValidation.validationAnnotation.ValidParams;
 import org.kata.clientprofileservice.validation.fieldEntityValidation.validationDto.IndividualValidationDto;
-import org.kata.dto.response.IndividualResponseDto;
-import org.kata.entity.individual.Individual;
-import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -19,13 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class IndividualController {
 
-    private final IndividualServiceImpl individualService;
-
-
     @RequestMapping("/createClient")
     @ValidParams
     public ResponseEntity<IndividualValidationDto> createTestValidationDto(@RequestBody IndividualValidationDto dto) {
-        individualService.createClient(dto);
+        //TODO реализовать запрос через REST в LOADER используя DAO
         return ResponseEntity.ok().body(dto);
     }
 

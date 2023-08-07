@@ -1,16 +1,11 @@
 package org.kata.clientprofileloader.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kata.clientprofileloader.service.ContactMediumService;
 import org.kata.entity.contactmedium.ContactMedium;
-import org.kata.entity.individual.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +21,6 @@ public class ContactMediumController {
     private final ContactMediumService contactMediumService;
 
     @Operation(summary = "Получение контакта клиента", description = "Получает контакт клиента по его UUID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контакт успешно получен", response = Address.class),
-            @ApiResponse(code = 404, message = "Контакт не найден")})
     @GetMapping("/getContact/{icp}")
     public ResponseEntity<ContactMedium> getClientContact(@PathVariable String icp) {
         log.info("Получение контакта для клиента с icp: {}", icp);
@@ -43,9 +35,6 @@ public class ContactMediumController {
     }
 
     @Operation(summary = "Добавление контакта клиента", description = "Добавляет контакт клиента по его UUID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контакт успешно добавлен", response = Address.class),
-            @ApiResponse(code = 404, message = "Контакт не добавлен")})
     @PostMapping("/postContact/{icp}")
     public ResponseEntity<ContactMedium> addClientContact(@PathVariable String icp, @RequestBody ContactMedium contact) {
         log.info("Контакт успешно добавлен для клиента с icp: {}", icp);
@@ -53,9 +42,6 @@ public class ContactMediumController {
     }
 
     @Operation(summary = "Обновление контакта клиента", description = "Обновление кнтакт клиента по его UUID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контакт успешно обновлен", response = Address.class),
-            @ApiResponse(code = 404, message = "Контакт не обновлен")})
     @PutMapping("/putContact/{icp}")
     public ResponseEntity<ContactMedium> updateClientContact(@PathVariable String icp, @RequestBody ContactMedium updatedContact) {
         log.info("Обновление контакта для клиента с icp: {}", icp);
@@ -64,9 +50,6 @@ public class ContactMediumController {
     }
 
     @Operation(summary = "Удаление контакта клиента", description = "Удаляет кнтакт клиента по его UUID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Контакт успешно удален", response = Address.class),
-            @ApiResponse(code = 404, message = "Контакт не удален")})
     @DeleteMapping("/deleteContact/{icp}")
     public ResponseEntity<Void> deleteClientContact(@PathVariable String icp) {
         log.info("Удаление контакта для клиента с icp: {}", icp);

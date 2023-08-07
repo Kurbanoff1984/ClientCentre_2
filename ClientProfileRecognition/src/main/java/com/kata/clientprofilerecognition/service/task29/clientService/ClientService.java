@@ -1,7 +1,7 @@
 package com.kata.clientprofilerecognition.service.task29.clientService;
 
 import com.kata.clientprofilerecognition.dto.RFPassportDocRecognitionDto;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,16 +18,16 @@ import java.util.Optional;
  */
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class ClientService {
     private final RestTemplate restTemplate;
     @Value("${URL_Loader}")
-    private final String URL_Loader ;
+    private String URL_Loader ;
     @Value("${URL_Update}")
-    private final String URL_Update ;
+    private String URL_Update ;
     @Value("${URL_Update_loader}")
-    private final String updateUrl;
+    private String updateUrl;
 
     //выполняет GET-запрос к микросервису Loader, чтобы получить старый документ
     private Optional<RFPassportDocRecognitionDto> fetchDocumentFromLoader(String icp) {

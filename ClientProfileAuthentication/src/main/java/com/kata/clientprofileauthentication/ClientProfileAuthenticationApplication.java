@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @OpenAPIDefinition(
         info = @Info(
@@ -23,7 +22,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
                 )
         )
 )
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+@SpringBootApplication
 public class ClientProfileAuthenticationApplication {
     public static void main(String[] args) {
         SpringApplication.run(ClientProfileAuthenticationApplication.class, args);

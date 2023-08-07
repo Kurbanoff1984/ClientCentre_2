@@ -97,12 +97,6 @@
             <artifactId>modelmapper</artifactId>
             <version>3.1.1</version>
         </dependency>
-        <!-- зависимости для dto-->
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>3.1.1</version>
-        </dependency>
         <!-- зависимости для генерации токена-->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -113,7 +107,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
+            <version>42.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -137,11 +131,6 @@
             <version>2.1.0</version>
         </dependency>
         <!-- зависимости для postgresql-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

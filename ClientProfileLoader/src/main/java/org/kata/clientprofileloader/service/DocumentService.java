@@ -1,6 +1,5 @@
 package org.kata.clientprofileloader.service;
 
-import com.google.protobuf.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class DocumentService {
+
     private final DocumentsRepository documentsRepository;
 
     //получить все документы
@@ -29,7 +29,7 @@ public class DocumentService {
             return documentsRepository.findAllByUuid(uuid);
         } catch (Exception e) {
             log.error("Ошибка при получении списка документов для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при получении списка документов для клиента");
+            throw new RuntimeException("Ошибка при получении списка документов для клиента");
         }
     }
 
@@ -40,7 +40,7 @@ public class DocumentService {
             return documentsRepository.findByUuid(uuid);
         } catch (Exception e) {
             log.error("Ошибка при получении документа с ID: {} для клиента с uuid: {}", uuid, e);
-            throw new ServiceException("Ошибка при получении документа для клиента");
+            throw new RuntimeException("Ошибка при получении документа для клиента");
         }
     }
 
@@ -52,7 +52,7 @@ public class DocumentService {
             return documentsRepository.save(document);
         } catch (Exception e) {
             log.error("Ошибка при добавлении документа для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при добавлении документа для клиента");
+            throw new RuntimeException("Ошибка при добавлении документа для клиента");
         }
     }
 
@@ -63,7 +63,7 @@ public class DocumentService {
             return documentsRepository.save(document);
         } catch (Exception e) {
             log.error("Ошибка при обновлении документа с UUID: {}", document.getUuid(), e);
-            throw new ServiceException("Ошибка при обновлении документа");
+            throw new RuntimeException("Ошибка при обновлении документа");
         }
     }
 //удалить документ
@@ -78,7 +78,7 @@ public class DocumentService {
             return false;
         } catch (Exception e) {
             log.error("Ошибка при удалении документа с ID: {} для клиента с UUID: {}", uuid, e);
-            throw new ServiceException("Ошибка при удалении документа для клиента");
+            throw new RuntimeException("Ошибка при удалении документа для клиента");
         }
     }
 }
